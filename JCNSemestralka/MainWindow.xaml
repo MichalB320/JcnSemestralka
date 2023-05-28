@@ -1,0 +1,51 @@
+﻿<Window x:Class="JCNSemestralka.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JCNSemestralka"
+        xmlns:userConstrols="clr-namespace:JCNSemestralka.View"
+        xmlns:insertTab="clr-namespace:JCNSemestralka.View.InsertView"
+        xmlns:inputTab="clr-namespace:JCNSemestralka.View.InputView"
+        xmlns:updateTab="clr-namespace:JCNSemestralka.View.UpdateView"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <userConstrols:MenuBar/>
+        </Grid>
+        <TabControl Grid.Row="1" >
+            <TabItem Header="Model">
+                <Image Width="auto" Source="C:\Users\micha\Desktop\model.png"/>
+            </TabItem>
+            <TabItem Header="Input">
+                <inputTab:InputView/>
+            </TabItem>
+            <TabItem Header="Output">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <GroupBox Header="SQL" Grid.Row="0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <RadioButton x:Name="InsertRadioB">INSERT</RadioButton>
+                            <RadioButton x:Name="DeleteRadioB">DELETE</RadioButton>
+                            <RadioButton x:Name="UpdateRadioB">UPDATE</RadioButton>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="INSERT">
+                <insertTab:InsertTab/>
+            </TabItem>
+            <TabItem Header="UPDATE">
+                <updateTab:UpdateTab/>
+            </TabItem>
+            <TabItem Header="DELETE"></TabItem>
+        </TabControl>
+    </Grid>
+</Window>
