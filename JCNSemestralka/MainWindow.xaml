@@ -8,6 +8,7 @@
         xmlns:insertTab="clr-namespace:JCNSemestralka.View.InsertView"
         xmlns:inputTab="clr-namespace:JCNSemestralka.View.InputView"
         xmlns:updateTab="clr-namespace:JCNSemestralka.View.UpdateView"
+        xmlns:deleteTab="clr-namespace:JCNSemestralka.View.DeleteView"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -45,7 +46,9 @@
             <TabItem Header="UPDATE">
                 <updateTab:UpdateTab/>
             </TabItem>
-            <TabItem Header="DELETE"></TabItem>
+            <TabItem Header="DELETE">
+                <deleteTab:DeleteTab/>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
