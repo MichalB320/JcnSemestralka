@@ -1,6 +1,6 @@
 ﻿namespace Library;
 
-public class Predmet
+public class Predmet : Item
 {
     public string _cis_predm { get; }
     public string _nazov { get; }

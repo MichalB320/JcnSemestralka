@@ -1,6 +1,6 @@
 ﻿namespace Library;
 
-public class Osoba
+public class Osoba : Item
 {
     public string _rod_cislo { get; set; }
     public string _meno { get; set; }

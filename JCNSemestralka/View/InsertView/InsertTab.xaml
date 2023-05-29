@@ -40,9 +40,18 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <RadioButton Name="allRadio"  Margin="5" Click="OnClickAllRadio">allCollumns</RadioButton>
+                        <RadioButton Name="customRadio" Margin="5" Click="OnClickCustomRadio">customCollumns</RadioButton>
+                        <CheckBox Name="customCheck" Margin="40,5,0,5" Click="OnClickCustomCheck">customTable</CheckBox>
+                    </StackPanel>
+                </Grid>
+                
+                <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
@@ -50,9 +59,19 @@
 
                     <TextBlock Grid.Column="0" Margin="20, 10, 10, 5">INSERT INTO</TextBlock>
                     <ComboBox Name="TablesComboBox" Grid.Column="1" Margin="0, 5, 20, 5"></ComboBox>
+                    <TextBox Name="CustomTableNAme" Grid.Column="1" Margin="0,5,20,5"></TextBox>
+                    <Grid Name="Custom" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Name="CustomComboBox" Grid.Column="0" Margin="0,5,10,5"></ComboBox>
+                        <TextBox Name="CustomTextBox" Grid.Column="0" Margin="0,5,10,5"></TextBox>
+                        <TextBox Grid.Column="1" Margin="0,5,20,5"></TextBox>
+                    </Grid>
                 </Grid>
 
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
@@ -61,9 +80,10 @@
                     <TextBox Name="ValuesTextBox" Grid.Column="1" Margin="7, 5, 20, 10"></TextBox>
                 </Grid>
                 
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Margin="10" Width="100" Height="25" Click="OnClickClear">CLEAR</Button>
-                    <Button Click="OnClickGenerate" Margin="10" Width="100" Height="25">GENERATE</Button>
+                    <Button Margin="10" Width="100" Height="25" Click="OnClickGenerate">GENERATE</Button>
+                    <Button Margin="10" Width="100" Height="25" Click="OnClickSave">SAVE</Button>
                 </StackPanel>
 
             </Grid>

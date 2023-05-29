@@ -1,6 +1,6 @@
 ﻿namespace Library;
 
-public class St_odbor
+public class St_odbor : Item
 {
     public string _st_odbor { get; }
     public string _st_zameranie { get; }

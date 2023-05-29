@@ -1,6 +1,6 @@
 ﻿namespace Library;
 
-public class Student
+public class Student : Item
 {
     public string _os_cislo { get; }
     public string _st_odbor { get; }

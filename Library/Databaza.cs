@@ -2,6 +2,10 @@
 
 public class Databaza
 {
+    private List<Item> _Universal;
+
+    private List<Ukazka> _ukazkaList;
+
     private List<Osoba> _osUdaje;
     private List<Student> _studenti;
     private List<Zap_Predmet> _zapPredmety;
@@ -30,7 +34,9 @@ public class Databaza
         _predmetBody = new();
         _stProgramy = new();
         _stOdbory = new();
+        _ukazkaList = new();
 
+        _Universal = new();
     }
 
     public void LoadOsUdaje(FileInfo csvFile, Action<string[]> action)
@@ -38,6 +44,7 @@ public class Databaza
         using (var sr = new StreamReader(csvFile.FullName))
         {
             string? line;
+            line = sr.ReadLine();//Preskoc hlavicku
             while (!sr.EndOfStream)
             {
                 line = sr.ReadLine();
@@ -54,15 +61,16 @@ public class Databaza
         }
     }
 
-    //public void Load(FileInfo csvFile)
-    //{
-    //    LoadOsUdaje(csvFile,  (casti) => {
-    //        var osoba = new Osoba(casti[0], casti[1], casti[2], casti[3], casti[4], casti[5]);
-    //        _osUdaje.Add(osoba);
-    //    });
-    //}
+    public void Save(FileInfo csvFile)
+    {
+
+    }
 
     public void Add<T>(List<T> list, T item) => list.Add(item);
+
+    public List<Item> GetUniversal() => _Universal;
+
+    public List<Ukazka> GetUkazky() => _ukazkaList;
 
     public List<Osoba> GetOsoby() => _osUdaje;
     public List<Student> GetStudenti() => _studenti;

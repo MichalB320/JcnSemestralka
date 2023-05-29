@@ -1,6 +1,6 @@
 ﻿namespace Library;
 
-public class Predmet_bod
+public class Predmet_bod : Item
 {
     public string _cis_predm { get; }
     public string _skrok { get; }

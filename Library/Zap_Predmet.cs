@@ -1,6 +1,6 @@
 ﻿namespace Library;
 
-public class Zap_Predmet
+public class Zap_Predmet : Item
 {
     public string _os_cislo { get; }
     public string _cis_predm { get; }

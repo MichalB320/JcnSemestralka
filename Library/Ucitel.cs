@@ -1,6 +1,6 @@
 ﻿namespace Library;
 
-public class Ucitel
+public class Ucitel : Item
 {
     public string _os_cislo { get; }
     public string _meno { get; }
