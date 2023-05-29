@@ -108,6 +108,7 @@ public partial class InsertTab : UserControl
     private void OnClickGenerate(object sender, RoutedEventArgs e)
     {
         string? tabulka;
+        string[] stlpce = new string[15];
         if (TablesComboBox.IsVisible)
         {
             tabulka = TablesComboBox.SelectedItem.ToString();
@@ -119,17 +120,22 @@ public partial class InsertTab : UserControl
         else if (CustomComboBox.IsVisible)
         {
             tabulka = CustomComboBox.SelectedItem.ToString();
+            stlpce = CustomColls.Text.Split(", ");
         }
         else if (CustomTextBox.IsVisible)
         {
             tabulka = CustomTextBox.Text;
+            stlpce = CustomColls.Text.Split(", ");
         }
         else
         {
             tabulka = "";
+            stlpce = new string[16];
+            for (int i = 0; i < 16; i++)
+                stlpce[i] = "";
         }
 
-
+        
 
         if (ValuesTextBox.Text.Equals("default"))
         {
@@ -137,18 +143,41 @@ public partial class InsertTab : UserControl
             var list = _databaza.GetUniversal();
             foreach (var osoba in list)
             {
-                QueryOutput.AppendText($"INSERT INTO {tabulka}\n\tVALUES ");
+                if (CustomColls.IsVisible)
+                    QueryOutput.AppendText($"INSERT INTO {tabulka} ({CustomColls.Text})\n\tVALUES (");
+                else
+                    QueryOutput.AppendText($"INSERT INTO {tabulka}\n\tVALUES (");
                 int max = list.ElementAt(index).Kapacita();
                 for (int i = 0; i < max; i++)
                 {
-                    QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");
+                    if (CustomColls.IsVisible)
+                    {
+                        for (int j = 0; j < stlpce.Length; j++)
+                        {
+                            if (list.ElementAt(0).GetStlpec(i).Contains(stlpce[j]))
+                            {
+                                if (j == stlpce.Length - 1)
+                                    QueryOutput.AppendText($"{osoba.GetStlpec(i)}");
+                                else
+                                    QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");
+                    }
+                    //if (list.ElementAt(0).GetStlpec(i).Contains(stlpce[5]))
+                    //{
+                    //    QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");
+                    //}
+                    //QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");
                 }
                 //QueryOutput.AppendText($"INSERT INTO {tabulka}\n\tVALUES {osoba.GetStlpec(0)}, {osoba._meno}, {osoba._priezvisko}, {osoba._ulica}, {osoba._psc}, {osoba._obec};\n\n");
-                QueryOutput.AppendText("\n");
+                QueryOutput.AppendText(");\n");
                 index++;
             }
             //Napis(tabulka!);
-
         }
         else
         {

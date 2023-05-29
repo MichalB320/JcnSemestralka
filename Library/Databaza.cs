@@ -44,7 +44,7 @@ public class Databaza
         using (var sr = new StreamReader(csvFile.FullName))
         {
             string? line;
-            line = sr.ReadLine();//Preskoc hlavicku
+            //line = sr.ReadLine();//Preskoc hlavicku
             while (!sr.EndOfStream)
             {
                 line = sr.ReadLine();
