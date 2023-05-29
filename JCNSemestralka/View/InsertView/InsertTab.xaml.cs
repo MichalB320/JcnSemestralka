@@ -163,6 +163,10 @@ public partial class InsertTab : UserControl
                             }
                         }
                     }
+                    else if (CustomColls.IsVisible)
+                    {
+
+                    }
                     else
                     {
                         QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");

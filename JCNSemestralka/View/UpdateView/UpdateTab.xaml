@@ -59,53 +59,53 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Margin="40,5, 10, 5">SET</TextBlock>
-                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <StackPanel Name="StackPanel" Grid.Column="1" Orientation="Horizontal">
                         <ComboBox Name="CollComboBox"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox" Grid.Column="1" Margin="7, 5, 20, 5"></TextBox>
-                        
-                        <ComboBox></ComboBox>
+                        <TextBox Name="ValuesTextBox" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
+
+                        <ComboBox Name="CollComboBox1"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox2" Grid.Column="1" Margin="7, 5, 20, 5"></TextBox>
-                        
-                        <ComboBox></ComboBox>
+                        <TextBox Name="ValuesTextBox2" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
+
+                        <ComboBox Name="CollComboBox2"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox3" Grid.Column="1" Margin="7, 5, 20, 5"></TextBox>
-                        
-                        <ComboBox></ComboBox>
+                        <TextBox Name="ValuesTextBox3" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
+
+                        <ComboBox Name="CollComboBox3"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox4" Grid.Column="1" Margin="7, 5, 20, 5"></TextBox>
-                        
-                        <ComboBox></ComboBox>
+                        <TextBox Name="ValuesTextBox4" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
+
+                        <ComboBox Name="CollComboBox4"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox5" Grid.Column="1" Margin="7, 5, 20, 5"></TextBox>
-                        
-                        <ComboBox></ComboBox>
+                        <TextBox Name="ValuesTextBox5" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
+
+                        <ComboBox Name="CollComboBox5"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox6" Grid.Column="1" Margin="7, 5, 20, 5"></TextBox>
-                        
-                        <ComboBox></ComboBox>
+                        <TextBox Name="ValuesTextBox6" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
+
+                        <ComboBox Name="CollComboBox6"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox7" Grid.Column="1" Margin="7, 5, 20, 5"></TextBox>
-                        
-                        <ComboBox></ComboBox>
+                        <TextBox Name="ValuesTextBox7" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
+
+                        <ComboBox Name="CollComboBox7"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox8" Grid.Column="1" Margin="7, 5, 20, 5"></TextBox>
-                        
-                        <ComboBox></ComboBox>
+                        <TextBox Name="ValuesTextBox8" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
+
+                        <ComboBox Name="CollComboBox8"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox9" Grid.Column="1" Margin="7, 5, 20, 5"></TextBox>
-                        
-                        <ComboBox></ComboBox>
+                        <TextBox Name="ValuesTextBox9" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
+
+                        <ComboBox Name="CollComboBox9"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox10" Grid.Column="1" Margin="7, 5, 20, 5"></TextBox>
-                        
-                        <ComboBox></ComboBox>
+                        <TextBox Name="ValuesTextBox10" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
+
+                        <ComboBox Name="CollComboBox10"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox11" Grid.Column="1" Margin="7, 5, 20, 5"></TextBox>
+                        <TextBox Name="ValuesTextBox11" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
                     </StackPanel>
                     
-                    <Button Grid.Column="2">New</Button>
+                    <Button Grid.Column="2" Click="OnClicklAdd">Add</Button>
                 </Grid>
 
                 <Grid Grid.Row="2">
@@ -114,12 +114,13 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Margin="60,5,10,10">WHERE</TextBlock>
-                    <TextBox Grid.Column="1" Margin="7,5,20,10"></TextBox>
+                    <TextBox Name="whereTextBox" Grid.Column="1" Margin="7,5,20,10"></TextBox>
                 </Grid>
 
                 <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Margin="10" Width="100" Height="25">CLEAR</Button>
-                    <Button Margin="10" Width="100" Height="25">GENERATE</Button>
+                    <Button Margin="10" Width="100" Height="25" Click="OnClickClear">CLEAR</Button>
+                    <Button Margin="10" Width="100" Height="25" Click="OnClickGenerate">GENERATE</Button>
+                    <Button Margin="10" Width="100" Height="25" Click="OnClickSave">SAVE</Button>
                 </StackPanel>
 
             </Grid>
