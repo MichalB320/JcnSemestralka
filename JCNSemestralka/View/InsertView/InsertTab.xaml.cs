@@ -382,6 +382,4 @@ public partial class InsertTab : UserControl
             CustomTableNAme.Visibility = Visibility.Hidden;
         }
     }
-
-   
 }
