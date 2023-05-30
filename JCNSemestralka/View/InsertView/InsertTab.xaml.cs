@@ -27,6 +27,7 @@ public partial class InsertTab : UserControl
         TablesComboBox.SelectedItem = TablesComboBox.Items.GetItemAt(0);
         CustomComboBox.SelectedItem = CustomComboBox.Items.GetItemAt(0);
         allRadio.IsChecked = true;
+        readButton.IsEnabled = false;
         Custom.Visibility = Visibility.Hidden;
         CustomTableNAme.Visibility = Visibility.Hidden;
     }
@@ -37,10 +38,36 @@ public partial class InsertTab : UserControl
         ofd.Filter = "CSV súbory (*.csv) | *.csv";
         ofd.ShowDialog();
         CitacTextBox.Text = ofd.FileName;
+        //FileInfo subor = new FileInfo(CitacTextBox.Text);
+    }
+
+    private void OnTextChangedCitacTextBox(object sender, TextChangedEventArgs e)
+    {
+        if (CitacTextBox.Text.Length == 0)
+        {
+
+        }
+        else
+        {
+            FileInfo subor = new FileInfo(CitacTextBox.Text);
+            if
+                (subor.Exists)
+            {
+                QueryOutput.AppendText("EXISTUJE");
+                readButton.IsEnabled = true;
+            }
+            else
+            {
+                QueryOutput.AppendText("NON");
+                readButton.IsEnabled = false;
+            }
+        }
     }
 
     private void OnClickReadButton(object sender, RoutedEventArgs e)
     {
+        _databaza.GetUniversal().Clear();
+
         FileInfo subor = new FileInfo(CitacTextBox.Text);
 
         _databaza.LoadOsUdaje(subor, (casti) =>
@@ -216,12 +243,79 @@ public partial class InsertTab : UserControl
         sfd.Filter = "CSV súbory (*.csv) | *.csv";
         sfd.ShowDialog();
         FileInfo subor = new FileInfo(sfd.FileName);
+
+        string? tabulka;
+        string[] stlpce = new string[15];
+        if (TablesComboBox.IsVisible)
+        {
+            tabulka = TablesComboBox.SelectedItem.ToString();
+        }
+        else if (CustomTableNAme.IsVisible)
+        {
+            tabulka = CustomTableNAme.Text;
+        }
+        else if (CustomComboBox.IsVisible)
+        {
+            tabulka = CustomComboBox.SelectedItem.ToString();
+            stlpce = CustomColls.Text.Split(", ");
+        }
+        else if (CustomTextBox.IsVisible)
+        {
+            tabulka = CustomTextBox.Text;
+            stlpce = CustomColls.Text.Split(", ");
+        }
+        else
+        {
+            tabulka = "";
+            stlpce = new string[16];
+            for (int i = 0; i < 16; i++)
+                stlpce[i] = "";
+        }
+
         using (var sw = new StreamWriter(subor.FullName))
         {
-            foreach (var ukazka in _databaza.GetUkazky())
+            int index = 0;
+            var list = _databaza.GetUniversal();
+            foreach (var osoba in list)
             {
-                sw.WriteLine($"INSERT INTO ukazka VALUES {ukazka._skupina}, {ukazka._priezvisko}, {ukazka._meno}, {ukazka._os_cislo}, {ukazka._cip_karta}, {ukazka._bodyZaSemester}, {ukazka._datumZaverHodnotenia}, {ukazka._znamkaZaverHodnotenia}, {ukazka._datum1T}, {ukazka._znamka1T}, {ukazka._datum2T}, {ukazka._znamka2T}, {ukazka._datum3T}, {ukazka._znamka3T}, {ukazka._body}, {ukazka._opakuje};\n");
+                if (CustomColls.IsVisible)
+                    sw.Write($"INSERT INTO {tabulka} ({CustomColls.Text})\n\tVALUES (");
+                else
+                    sw.Write($"INSERT INTO {tabulka}\n\tVALUES (");
+                int max = list.ElementAt(index).Kapacita();
+                for (int i = 0; i < max; i++)
+                {
+                    if (CustomColls.IsVisible)
+                    {
+                        for (int j = 0; j < stlpce.Length; j++)
+                        {
+                            if (list.ElementAt(0).GetStlpec(i).Contains(stlpce[j]))
+                            {
+                                if (j == stlpce.Length - 1)
+                                    sw.Write($"{osoba.GetStlpec(i)}");
+                                else
+                                    sw.Write($"{osoba.GetStlpec(i)}, ");
+                            }
+                        }
+                    }
+                    else if (CustomColls.IsVisible)
+                    {
+
+                    }
+                    else
+                    {
+                        sw.Write($"{osoba.GetStlpec(i)}, ");
+                    }
+                }
+                
+                sw.Write(");\n");
+                index++;
             }
+
+            //foreach (var ukazka in _databaza.GetUkazky())
+            //{
+            //    sw.WriteLine($"INSERT INTO ukazka VALUES {ukazka._skupina}, {ukazka._priezvisko}, {ukazka._meno}, {ukazka._os_cislo}, {ukazka._cip_karta}, {ukazka._bodyZaSemester}, {ukazka._datumZaverHodnotenia}, {ukazka._znamkaZaverHodnotenia}, {ukazka._datum1T}, {ukazka._znamka1T}, {ukazka._datum2T}, {ukazka._znamka2T}, {ukazka._datum3T}, {ukazka._znamka3T}, {ukazka._body}, {ukazka._opakuje};\n");
+            //}
 
             sw.WriteLine("fs");
             sw.Close();
@@ -288,4 +382,6 @@ public partial class InsertTab : UserControl
             CustomTableNAme.Visibility = Visibility.Hidden;
         }
     }
+
+   
 }

@@ -26,11 +26,11 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" Click="OnClickFindButton" Width="100" Height="25">FIND</Button>
-                    <Button Grid.Column="1" Click="OnClickReadButton" Width="100" Height="25">READ</Button>
+                    <Button Name="readButton" Grid.Column="1" Click="OnClickReadButton" Width="100" Height="25">READ</Button>
                 </Grid>
 
-                <TextBox Name="CitacTextBox" Grid.Row="1" Margin="20,10,20,10" Height="20"></TextBox>
-               
+                <TextBox Name="CitacTextBox" Grid.Row="1" Margin="20,10,20,10" Height="20" TextChanged="OnTextChangedCitacTextBox" />
+
             </Grid>
         </GroupBox>
         
