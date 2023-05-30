@@ -43,6 +43,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
@@ -82,8 +83,17 @@
                     <TextBlock Grid.Column="0" Margin="40,5, 10, 10">VALUES</TextBlock>
                     <TextBox Name="ValuesTextBox" Grid.Column="1" Margin="7, 5, 20, 10"></TextBox>
                 </Grid>
+
+                <Grid Grid.Row="3" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0">MultipleRowsAtOnce: </TextBlock>
+                    <TextBox Name="multiple" Grid.Column="1" HorizontalAlignment="Stretch">1</TextBox>
+                </Grid>
                 
-                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Margin="10" Width="100" Height="25" Click="OnClickClear">CLEAR</Button>
                     <Button Margin="10" Width="100" Height="25" Click="OnClickGenerate">GENERATE</Button>
                     <Button Margin="10" Width="100" Height="25" Click="OnClickSave">SAVE</Button>

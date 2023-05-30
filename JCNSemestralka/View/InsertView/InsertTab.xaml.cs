@@ -186,17 +186,21 @@ public partial class InsertTab : UserControl
             cisloStlpcu++;
         }
 
-
+        bool insert = true;
         if (generateCheck.IsChecked == true) //ValuesTextBox.Text.Equals("default")
         {
             int index = 0;
             var list = _databaza.GetUniversal();
             foreach (var osoba in list)
             {
-                if (CustomColls.IsVisible)
-                    QueryOutput.AppendText($"INSERT INTO {tabulka} ({CustomColls.Text})\n\tVALUES (");
-                else
-                    QueryOutput.AppendText($"INSERT INTO {tabulka}\n\tVALUES (");
+                if (insert)
+                {
+                    if (CustomColls.IsVisible)
+                        QueryOutput.AppendText($"INSERT INTO {tabulka} ({CustomColls.Text})\n\tVALUES (");
+                    else
+                        QueryOutput.AppendText($"INSERT INTO {tabulka}\n\tVALUES (");
+                    insert = false;
+                }
                 int max = list.ElementAt(index).Kapacita();
                 for (int i = 0; i < max; i++)
                 {
@@ -297,8 +301,20 @@ public partial class InsertTab : UserControl
                 {
                     sb.Append($"{strings[b]}, ");
                 }
-                QueryOutput.AppendText($"{sb.ToString()});\n");
-                sb.Clear();
+                //QueryOutput.AppendText($"{sb.ToString()});\n");
+                //QueryOutput.AppendText($"{sb.ToString()}), ");
+                //sb.Clear();
+                if (index % int.Parse(multiple.Text) == 0)
+                {
+                    QueryOutput.AppendText($"{sb.ToString()});\n");
+                    sb.Clear();
+                    insert = true;
+                }
+                else
+                {
+                    QueryOutput.AppendText($"{sb.ToString()}), (");
+                    sb.Clear();
+                }
                 index++;
                 cisloStlpcu = 0;
                 //foreach (var cast in casti)
