@@ -171,6 +171,7 @@ public partial class InsertTab : UserControl
             for (int i = 0; i < 16; i++)
                 stlpce[i] = "";
         }
+       
 
         var sb = new StringBuilder();
         string[] casti = ValuesTextBox.Text.Split(",");
@@ -184,6 +185,7 @@ public partial class InsertTab : UserControl
             }
             cisloStlpcu++;
         }
+
 
         if (generateCheck.IsChecked == true) //ValuesTextBox.Text.Equals("default")
         {
@@ -212,30 +214,58 @@ public partial class InsertTab : UserControl
                                     //    if (col.ElementAt(b) == j)
                                     //        sb.Append($"'{osoba.GetStlpec(i)}'");
                                     //}
+                                    //for (int b = 0; b < col.Count; b++)
+                                    //{
+                                    //    if (col.ElementAt(b) == j)
+                                    //    {
+                                    //        sb.Append($"'{osoba.GetStlpec(i)}'");
+                                    //        col.RemoveAt(b);
+                                    //        //nebolo = false;
+                                    //        break;
+                                    //    }
+                                    //    else
+                                    //        sb.Append($"{osoba.GetStlpec(i)}");
+                                    //}
                                 }
                                 else
                                 {
-                                    //sb.Append($"{osoba.GetStlpec(i)}, "); //QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");
-                                    if (col.Count > 0)
-                                    {
-                                        for (int b = 0; b < col.Count; b++)
-                                        {
-                                            if (col.ElementAt(b) == j)
-                                                sb.Append($"'{osoba.GetStlpec(i)}', ");
-                                            else
-                                                sb.Append($"{osoba.GetStlpec(i)}, ");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        sb.Append($"{osoba.GetStlpec(i)}, ");
-                                    }
+                                    sb.Append($"{osoba.GetStlpec(i)}, "); //QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");
+                                    //if (col.Count > 0)
+                                    //{
+                                        
+                                    //    //for (int b = 0; b < col.Count; b++)
+                                    //    //{
+                                    //    //    //bool nebolo = true;
+                                    //    //    if (col.ElementAt(b) == j)
+                                    //    //    {
+                                    //    //        sb.Append($"'{osoba.GetStlpec(i)}', ");
+                                    //    //        col.RemoveAt(b);
+                                    //    //        //nebolo = false;
+                                    //    //        break;
+                                    //    //    }
+                                    //    //    else
+                                    //    //        sb.Append($"{osoba.GetStlpec(i)}, ");
+                                    //    //}
+                                    //}
+                                    //else
+                                    //{
+                                    //    sb.Append($"{osoba.GetStlpec(i)}, ");
+                                    //}
                                 }
                             }
                         }
-                        
-                        QueryOutput.AppendText(sb.ToString());
-                        sb.Clear();
+                        //string[] strings = sb.ToString().Split(",");
+                        //for (int b = 0; b < col.Count; b++)
+                        //{
+                        //    strings[col.ElementAt(b)] = $"'{strings[col.ElementAt(b)]}'";
+                        //}
+                        //sb.Clear();
+                        //for (int b = 0; b < strings.Length; b++)
+                        //{
+                        //    sb.Append($"{strings[b]}, ");
+                        //}
+                        //QueryOutput.AppendText(sb.ToString());
+                        //sb.Clear();
                     }
                     else if (CustomColls.IsVisible)
                     {
@@ -252,8 +282,33 @@ public partial class InsertTab : UserControl
                     //QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");
                 }
                 //QueryOutput.AppendText($"INSERT INTO {tabulka}\n\tVALUES {osoba.GetStlpec(0)}, {osoba._meno}, {osoba._priezvisko}, {osoba._ulica}, {osoba._psc}, {osoba._obec};\n\n");
-                QueryOutput.AppendText(");\n");
+
+                string[] strings = sb.ToString().Split(",");
+                for (int b = 0; b < col.Count; b++)
+                {
+                    strings[col.ElementAt(b)] = strings[col.ElementAt(b)].Trim();
+                }
+                for (int b = 0; b < col.Count; b++)
+                {
+                    strings[col.ElementAt(b)] = $"'{strings[col.ElementAt(b)]}'";
+                }
+                sb.Clear();
+                for (int b = 0; b < strings.Length; b++)
+                {
+                    sb.Append($"{strings[b]}, ");
+                }
+                QueryOutput.AppendText($"{sb.ToString()});\n");
+                sb.Clear();
                 index++;
+                cisloStlpcu = 0;
+                //foreach (var cast in casti)
+                //{
+                //    if (cast.Contains("'"))
+                //    {
+                //        col.Add(cisloStlpcu);
+                //    }
+                //    cisloStlpcu++;
+                //}
             }
             //Napis(tabulka!);
         }
@@ -319,6 +374,19 @@ public partial class InsertTab : UserControl
                 stlpce[i] = "";
         }
 
+        var sb = new StringBuilder();
+        string[] casti = ValuesTextBox.Text.Split(",");
+        List<int> col = new List<int>();
+        int cisloStlpcu = 0;
+        foreach (var cast in casti)
+        {
+            if (cast.Contains("'"))
+            {
+                col.Add(cisloStlpcu);
+            }
+            cisloStlpcu++;
+        }
+
         using (var sw = new StreamWriter(subor.FullName))
         {
             int index = 0;
@@ -339,9 +407,9 @@ public partial class InsertTab : UserControl
                             if (list.ElementAt(0).GetStlpec(i).Contains(stlpce[j]))
                             {
                                 if (j == stlpce.Length - 1)
-                                    sw.Write($"{osoba.GetStlpec(i)}");
+                                    sb.Append($"{osoba.GetStlpec(i)}"); //sw.Write($"{osoba.GetStlpec(i)}");
                                 else
-                                    sw.Write($"{osoba.GetStlpec(i)}, ");
+                                    sb.Append($"{osoba.GetStlpec(i)}, "); //sw.Write($"{osoba.GetStlpec(i)}, ");
                             }
                         }
                     }
@@ -354,8 +422,26 @@ public partial class InsertTab : UserControl
                         sw.Write($"{osoba.GetStlpec(i)}, ");
                     }
                 }
+
+                string[] strings = sb.ToString().Split(",");
+                for (int b = 0; b < col.Count; b++)
+                {
+                    strings[col.ElementAt(b)] = strings[col.ElementAt(b)].Trim();
+                }
+                for (int b = 0; b < col.Count; b++)
+                {
+                    strings[col.ElementAt(b)] = $"'{strings[col.ElementAt(b)]}'";
+                }
+                sb.Clear();
+                for (int b = 0; b < strings.Length; b++)
+                {
+                    sb.Append($"{strings[b]}, ");
+                }
+               
                 
-                sw.Write(");\n");
+
+                sw.Write($"{sb.ToString()});\n");
+                sb.Clear();
                 index++;
             }
 
@@ -364,7 +450,7 @@ public partial class InsertTab : UserControl
             //    sw.WriteLine($"INSERT INTO ukazka VALUES {ukazka._skupina}, {ukazka._priezvisko}, {ukazka._meno}, {ukazka._os_cislo}, {ukazka._cip_karta}, {ukazka._bodyZaSemester}, {ukazka._datumZaverHodnotenia}, {ukazka._znamkaZaverHodnotenia}, {ukazka._datum1T}, {ukazka._znamka1T}, {ukazka._datum2T}, {ukazka._znamka2T}, {ukazka._datum3T}, {ukazka._znamka3T}, {ukazka._body}, {ukazka._opakuje};\n");
             //}
 
-            sw.WriteLine("fs");
+            //sw.WriteLine("fs");
             sw.Close();
         }
     }
