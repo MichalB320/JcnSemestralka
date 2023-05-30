@@ -138,6 +138,7 @@ public partial class InsertTab : UserControl
         for (int i = 0; i < list.ElementAt(0).Kapacita(); i++)
         {
             ValuesTextBox.AppendText($"{list.ElementAt(0).GetStlpec(i)}, ");
+            //CustomColls.AppendText($"{list.ElementAt(0).GetStlpec(i)}, ");
         }
         deleteButton.IsEnabled = true;
     }
@@ -277,7 +278,8 @@ public partial class InsertTab : UserControl
                     }
                     else
                     {
-                        QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");
+                        //QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");
+                        sb.Append($"{osoba.GetStlpec(i)}, ");
                     }
                     //if (list.ElementAt(0).GetStlpec(i).Contains(stlpce[5]))
                     //{
@@ -299,7 +301,15 @@ public partial class InsertTab : UserControl
                 sb.Clear();
                 for (int b = 0; b < strings.Length; b++)
                 {
-                    sb.Append($"{strings[b]}, ");
+                    if (b == strings.Length - 1)
+                    {
+                        sb.Append($"{strings[b]}");
+                    }
+                    else
+                    {
+                        sb.Append($"{strings[b]}, ");
+                    }
+                    //sb.Append($"{strings[b]}, ");
                 }
                 //QueryOutput.AppendText($"{sb.ToString()});\n");
                 //QueryOutput.AppendText($"{sb.ToString()}), ");
