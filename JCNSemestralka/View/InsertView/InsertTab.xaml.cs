@@ -1,7 +1,9 @@
 ﻿using Library;
 using Microsoft.Win32;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -28,6 +30,7 @@ public partial class InsertTab : UserControl
         CustomComboBox.SelectedItem = CustomComboBox.Items.GetItemAt(0);
         allRadio.IsChecked = true;
         readButton.IsEnabled = false;
+        deleteButton.IsEnabled = false;
         Custom.Visibility = Visibility.Hidden;
         CustomTableNAme.Visibility = Visibility.Hidden;
     }
@@ -53,12 +56,12 @@ public partial class InsertTab : UserControl
             if
                 (subor.Exists)
             {
-                QueryOutput.AppendText("EXISTUJE");
+                //QueryOutput.AppendText("EXISTUJE");
                 readButton.IsEnabled = true;
             }
             else
             {
-                QueryOutput.AppendText("NON");
+                //QueryOutput.AppendText("NON");
                 readButton.IsEnabled = false;
             }
         }
@@ -129,7 +132,14 @@ public partial class InsertTab : UserControl
             //}
         });
 
-        ValuesTextBox.Text = "default";
+        //ValuesTextBox.Text = "default";
+        //foreach (var item in _databaza.GetUniversal().ElementAt(0))
+        var list = _databaza.GetUniversal();
+        for (int i = 0; i < list.ElementAt(0).Kapacita(); i++)
+        {
+            ValuesTextBox.AppendText($"{list.ElementAt(0).GetStlpec(i)}, ");
+        }
+        deleteButton.IsEnabled = true;
     }
 
     private void OnClickGenerate(object sender, RoutedEventArgs e)
@@ -162,9 +172,20 @@ public partial class InsertTab : UserControl
                 stlpce[i] = "";
         }
 
-        
+        var sb = new StringBuilder();
+        string[] casti = ValuesTextBox.Text.Split(",");
+        List<int> col = new List<int>();
+        int cisloStlpcu = 0;
+        foreach (var cast in casti)
+        {
+            if (cast.Contains("'"))
+            {
+                col.Add(cisloStlpcu);
+            }
+            cisloStlpcu++;
+        }
 
-        if (ValuesTextBox.Text.Equals("default"))
+        if (generateCheck.IsChecked == true) //ValuesTextBox.Text.Equals("default")
         {
             int index = 0;
             var list = _databaza.GetUniversal();
@@ -184,11 +205,37 @@ public partial class InsertTab : UserControl
                             if (list.ElementAt(0).GetStlpec(i).Contains(stlpce[j]))
                             {
                                 if (j == stlpce.Length - 1)
-                                    QueryOutput.AppendText($"{osoba.GetStlpec(i)}");
+                                {
+                                    sb.Append($"{osoba.GetStlpec(i)}"); //QueryOutput.AppendText($"{osoba.GetStlpec(i)}");
+                                    //for (int b = 0; b < col.Count; b++)
+                                    //{
+                                    //    if (col.ElementAt(b) == j)
+                                    //        sb.Append($"'{osoba.GetStlpec(i)}'");
+                                    //}
+                                }
                                 else
-                                    QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");
+                                {
+                                    //sb.Append($"{osoba.GetStlpec(i)}, "); //QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");
+                                    if (col.Count > 0)
+                                    {
+                                        for (int b = 0; b < col.Count; b++)
+                                        {
+                                            if (col.ElementAt(b) == j)
+                                                sb.Append($"'{osoba.GetStlpec(i)}', ");
+                                            else
+                                                sb.Append($"{osoba.GetStlpec(i)}, ");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        sb.Append($"{osoba.GetStlpec(i)}, ");
+                                    }
+                                }
                             }
                         }
+                        
+                        QueryOutput.AppendText(sb.ToString());
+                        sb.Clear();
                     }
                     else if (CustomColls.IsVisible)
                     {
@@ -381,5 +428,18 @@ public partial class InsertTab : UserControl
             TablesComboBox.Visibility = Visibility.Visible;
             CustomTableNAme.Visibility = Visibility.Hidden;
         }
+    }
+
+    private void OnTextChangedCustomColls(object sender, TextChangedEventArgs e)
+    {
+        ValuesTextBox.Text = CustomColls.Text;
+    }
+
+    private void OnClickDeleteButton(object sender, RoutedEventArgs e)
+    {
+        _databaza.GetUniversal().Clear();
+        CitacTextBox.Clear();
+        readButton.IsEnabled = false;
+        deleteButton.IsEnabled = false;
     }
 }

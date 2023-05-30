@@ -24,12 +24,14 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" Click="OnClickFindButton" Width="100" Height="25">FIND</Button>
                     <Button Name="readButton" Grid.Column="1" Click="OnClickReadButton" Width="100" Height="25">READ</Button>
+                    <Button Name="deleteButton" Grid.Column="2" Width="100" Height="25" Click="OnClickDeleteButton">DELETE</Button>
                 </Grid>
 
-                <TextBox Name="CitacTextBox" Grid.Row="1" Margin="20,10,20,10" Height="20" TextChanged="OnTextChangedCitacTextBox" />
+                <TextBox Name="CitacTextBox" Grid.Row="1" Margin="20,10,20,10" Height="20" TextChanged="OnTextChangedCitacTextBox"/>
 
             </Grid>
         </GroupBox>
@@ -48,6 +50,7 @@
                         <RadioButton Name="allRadio"  Margin="5" Click="OnClickAllRadio">allCollumns</RadioButton>
                         <RadioButton Name="customRadio" Margin="5" Click="OnClickCustomRadio">customCollumns</RadioButton>
                         <CheckBox Name="customCheck" Margin="40,5,0,5" Click="OnClickCustomCheck">customTable</CheckBox>
+                        <CheckBox Name="generateCheck" Margin="5">generateFromFile</CheckBox>
                     </StackPanel>
                 </Grid>
                 
@@ -67,7 +70,7 @@
                         </Grid.ColumnDefinitions>
                         <ComboBox Name="CustomComboBox" Grid.Column="0" Margin="0,5,10,5"></ComboBox>
                         <TextBox Name="CustomTextBox" Grid.Column="0" Margin="0,5,10,5"></TextBox>
-                        <TextBox Name="CustomColls" Grid.Column="1" Margin="0,5,20,5"></TextBox>
+                        <TextBox Name="CustomColls" Grid.Column="1" Margin="0,5,20,5" TextChanged="OnTextChangedCustomColls"/>
                     </Grid>
                 </Grid>
 
