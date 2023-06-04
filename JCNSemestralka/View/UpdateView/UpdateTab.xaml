@@ -60,47 +60,47 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Margin="40,5, 10, 5">SET</TextBlock>
                     <StackPanel Name="StackPanel" Grid.Column="1" Orientation="Horizontal">
-                        <ComboBox Name="CollComboBox"></ComboBox>
+                        <ComboBox Name="CollComboBox" Margin="5"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
                         <TextBox Name="ValuesTextBox" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
 
-                        <ComboBox Name="CollComboBox1"></ComboBox>
+                        <ComboBox Name="CollComboBox1" Margin="5"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
                         <TextBox Name="ValuesTextBox2" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
 
-                        <ComboBox Name="CollComboBox2"></ComboBox>
+                        <ComboBox Name="CollComboBox2" Margin="5"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
                         <TextBox Name="ValuesTextBox3" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
 
-                        <ComboBox Name="CollComboBox3"></ComboBox>
+                        <ComboBox Name="CollComboBox3" Margin="5"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
                         <TextBox Name="ValuesTextBox4" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
 
-                        <ComboBox Name="CollComboBox4"></ComboBox>
+                        <ComboBox Name="CollComboBox4" Margin="5"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
                         <TextBox Name="ValuesTextBox5" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
 
-                        <ComboBox Name="CollComboBox5"></ComboBox>
+                        <ComboBox Name="CollComboBox5" Margin="5"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
                         <TextBox Name="ValuesTextBox6" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
 
-                        <ComboBox Name="CollComboBox6"></ComboBox>
+                        <ComboBox Name="CollComboBox6" Margin="5"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
                         <TextBox Name="ValuesTextBox7" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
 
-                        <ComboBox Name="CollComboBox7"></ComboBox>
+                        <ComboBox Name="CollComboBox7" Margin="5"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
                         <TextBox Name="ValuesTextBox8" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
 
-                        <ComboBox Name="CollComboBox8"></ComboBox>
+                        <ComboBox Name="CollComboBox8" Margin="5"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
                         <TextBox Name="ValuesTextBox9" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
 
-                        <ComboBox Name="CollComboBox9"></ComboBox>
+                        <ComboBox Name="CollComboBox9" Margin="5"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
                         <TextBox Name="ValuesTextBox10" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
 
-                        <ComboBox Name="CollComboBox10"></ComboBox>
+                        <ComboBox Name="CollComboBox10" Margin="5"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
                         <TextBox Name="ValuesTextBox11" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
                     </StackPanel>

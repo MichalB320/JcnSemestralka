@@ -14,7 +14,7 @@ namespace JCNSemestralka.View.InsertView;
 /// </summary>
 public partial class InsertTab : UserControl
 {
-    private readonly string[] tabulky = { "ukazka", "os_udaje", "student", "zap_predmety", "predmet", "ucitel", "predmet_bod", "st_program", "st_odbory" };
+    private readonly string[] tabulky = { "os_udaje", "student", "zap_predmety", "predmet", "ucitel", "predmet_bod", "st_program", "st_odbory" };
     private Databaza _databaza;
 
     public InsertTab()
@@ -197,7 +197,13 @@ public partial class InsertTab : UserControl
             QueryOutput.AppendText($"INSERT INTO {tabulka}\n\tVALUES {ValuesTextBox.Text};");
     }
 
-    private void OnClickClear(object sender, RoutedEventArgs e) => QueryOutput.Clear();
+    private void OnClickClear(object sender, RoutedEventArgs e)
+    { 
+        QueryOutput.Clear();
+        CustomColls.Clear();
+        CustomTextBox.Clear();
+        ValuesTextBox.Clear();
+    }
 
     private void OnClickSave(object sender, RoutedEventArgs e)
     {

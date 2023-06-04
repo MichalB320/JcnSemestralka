@@ -25,17 +25,25 @@ public partial class DeleteTab : UserControl
             tablesComboBox.Items.Add(tabulka);
         }
         tablesComboBox.SelectedIndex = 0;
+        customTableNameTextBox.Visibility = System.Windows.Visibility.Hidden;
     }
 
     private void OnClickGenerate(object sender, System.Windows.RoutedEventArgs e)
     {
-        QueryOutput.AppendText($"DELETE FROM {tablesComboBox.SelectedItem}\n\t WHERE {whereTextBox.Text};\n");
+        string? tableName;
+        if (customCheck.IsChecked!.Value)
+            tableName = customTableNameTextBox.Text;
+        else
+            tableName = tablesComboBox.SelectedItem.ToString();
+
+        QueryOutput.AppendText($"DELETE FROM {tableName}\n\t WHERE {whereTextBox.Text};\n");
     }
 
     private void OnClickClear(object sender, System.Windows.RoutedEventArgs e)
     {
         QueryOutput.Clear();
         whereTextBox.Clear();
+        customTableNameTextBox.Clear();
     }
 
     private void OnClickSave(object sender, System.Windows.RoutedEventArgs e)
@@ -51,6 +59,20 @@ public partial class DeleteTab : UserControl
             {
                 sw.Write(QueryOutput.Text);
             });
+        }
+    }
+
+    private void OnClickCustomTable(object sender, System.Windows.RoutedEventArgs e)
+    {
+        if (tablesComboBox.IsVisible)
+        {
+            tablesComboBox.Visibility = System.Windows.Visibility.Hidden;
+            customTableNameTextBox.Visibility = System.Windows.Visibility.Visible;
+        }
+        else
+        {
+            tablesComboBox.Visibility = System.Windows.Visibility.Visible;
+            customTableNameTextBox.Visibility = System.Windows.Visibility.Hidden;
         }
     }
 }
