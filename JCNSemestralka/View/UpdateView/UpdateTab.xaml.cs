@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Library;
+using Microsoft.Win32;
+using System.IO;
 using System.Windows.Controls;
 
 namespace JCNSemestralka.View.UpdateView;
@@ -17,19 +19,22 @@ public partial class UpdateTab : UserControl
                               new string[] { "st_odbor", "st_zameranie", "cis_predm", "skrok", "typ_povin", "rocnik", "odpor_rocnik"},
                               new string[] { "st_odbor", "st_zameranie", "popis_odboru", "popis_zamerania"} };
     private int start;
+    private Databaza _databaza;
 
     public UpdateTab()
     {
         InitializeComponent();
+
+        _databaza = new Databaza();
 
         string[] tabulky = { "os_udaje", "student", "zap_predmety", "predmet", "ucitel", "predmet_bod", "st_program", "st_odbory" };
 
         foreach (var tabulka in tabulky)
         {
             TablesComboBox.Items.Add(tabulka);
-            
+
         }
-        
+
 
         TablesComboBox.SelectedIndex = 0;
         //foreach (var item in stlpce[TablesComboBox.SelectedIndex])
@@ -65,11 +70,11 @@ public partial class UpdateTab : UserControl
 
     private void OnClicklAdd(object sender, System.Windows.RoutedEventArgs e)
     {
-        
+
         for (int i = start; i < start + 3; i++)
         {
             StackPanel.Children[i].Visibility = System.Windows.Visibility.Visible;
-        }     
+        }
         start = start + 3;
     }
 
@@ -81,12 +86,23 @@ public partial class UpdateTab : UserControl
     private void OnClickGenerate(object sender, System.Windows.RoutedEventArgs e)
     {
         QueryOutput.AppendText($"UPDATE {TablesComboBox.SelectedItem} SET {CollComboBox.SelectedItem} = {ValuesTextBox.Text} WHERE {whereTextBox.Text};\n");
-        
+
 
     }
 
     private void OnClickSave(object sender, System.Windows.RoutedEventArgs e)
     {
+        SaveFileDialog sfd = new SaveFileDialog();
+        sfd.Filter = "CSV súbory (*.csv) | *.csv";
+        sfd.ShowDialog();
 
+        if (!sfd.FileName.Equals(""))
+        {
+            FileInfo file = new FileInfo(sfd.FileName);
+            _databaza.Save(file, sw =>
+            {
+                sw.Write(QueryOutput.Text);
+            });
+        }
     }
 }

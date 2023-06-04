@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Header="Citac" Grid.Row="0">
+        <GroupBox Header="READER" Grid.Row="0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -89,8 +89,8 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0">MultipleRowsAtOnce: </TextBlock>
-                    <TextBox Name="multiple" Grid.Column="1" HorizontalAlignment="Stretch">1</TextBox>
+                    <TextBlock Grid.Column="0" Margin="20,5, 10, 10">MultipleRowsAtOnce: </TextBlock>
+                    <TextBox Name="multiple" Grid.Column="1" Margin="0,5, 20, 10" HorizontalAlignment="Stretch">1</TextBox>
                 </Grid>
                 
                 <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">

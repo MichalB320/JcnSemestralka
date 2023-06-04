@@ -14,7 +14,7 @@ public class Item
         stlpce.Add(stlpec);
     }
 
-    public string GetStlpec(int i) 
+    public string GetStlpec(int i)
     {
         return stlpce.ElementAt(i);
     }

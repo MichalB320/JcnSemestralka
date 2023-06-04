@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Header="Citac" Grid.Row="0">
+        <GroupBox Header="READER" Grid.Row="0">
             <Grid Margin="-2,0,2,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>

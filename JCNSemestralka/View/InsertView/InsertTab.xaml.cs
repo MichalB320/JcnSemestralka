@@ -41,7 +41,6 @@ public partial class InsertTab : UserControl
         ofd.Filter = "CSV súbory (*.csv) | *.csv";
         ofd.ShowDialog();
         CitacTextBox.Text = ofd.FileName;
-        //FileInfo subor = new FileInfo(CitacTextBox.Text);
     }
 
     private void OnTextChangedCitacTextBox(object sender, TextChangedEventArgs e)
@@ -53,17 +52,10 @@ public partial class InsertTab : UserControl
         else
         {
             FileInfo subor = new FileInfo(CitacTextBox.Text);
-            if
-                (subor.Exists)
-            {
-                //QueryOutput.AppendText("EXISTUJE");
+            if (subor.Exists)
                 readButton.IsEnabled = true;
-            }
             else
-            {
-                //QueryOutput.AppendText("NON");
                 readButton.IsEnabled = false;
-            }
         }
     }
 
@@ -73,73 +65,18 @@ public partial class InsertTab : UserControl
 
         FileInfo subor = new FileInfo(CitacTextBox.Text);
 
-        _databaza.LoadOsUdaje(subor, (casti) =>
+        _databaza.Load(subor, (casti) =>
         {
-
-            //var ukazka = new Ukazka(casti[0], casti[1], casti[2], casti[3], casti[4], casti[5], casti[6], casti[7], casti[8], casti[9], casti[10], casti[11], casti[12], casti[13], casti[14], casti[15]);
             var item = new Item();
             foreach (var cast in casti)
                 item.AddStlpec(cast);
 
-            //_databaza.Add<Ukazka>(_databaza.GetUkazky(), ukazka);
             _databaza.Add<Item>(_databaza.GetUniversal(), item);
-
-            //if (TablesComboBox.SelectedItem.ToString() == "os_udaje")
-            //{
-            //    var osoba = new Osoba(casti[0], casti[1], casti[2], casti[3], casti[4], casti[5]);
-            //    _databaza.Add<Osoba>(_databaza.GetOsoby(), osoba);
-            //}
-            //else if (TablesComboBox.SelectedItem.ToString() == "ukazka")
-            //{
-            //    var ukazka = new Ukazka(casti[0], casti[1], casti[2], casti[3], casti[4], casti[5], casti[6], casti[7], casti[8], casti[9], casti[10], casti[11], casti[12], casti[13], casti[14], casti[15]);
-            //    //_databaza.Add<Ukazka>(_databaza.GetUkazky(), ukazka);
-            //    _databaza.Add<Item>(_databaza.GetUniversal(), ukazka);
-            //}
-            //else if (TablesComboBox.SelectedItem.ToString() == "student")
-            //{
-            //    var student = new Student(casti[0], casti[1], casti[2], casti[3], casti[4], casti[5]);
-            //    _databaza.Add<Student>(_databaza.GetStudenti(), student);
-            //}
-            //else if (TablesComboBox.SelectedItem.ToString() == "zap_predmety")
-            //{
-            //    var zap_predmet = new Zap_Predmet(casti[0], casti[1], casti[2], casti[3], casti[4], casti[5], casti[6], casti[7]);
-            //    _databaza.Add<Zap_Predmet>(_databaza.GetZapPredmety(), zap_predmet);
-            //}
-            //else if (TablesComboBox.SelectedItem.ToString() == "predmet")
-            //{
-            //    var predmet = new Predmet(casti[0], casti[1]);
-            //    _databaza.Add<Predmet>(_databaza.GetPredmety(), predmet);
-            //}
-            //else if (TablesComboBox.SelectedItem.ToString() == "ucitel")
-            //{
-            //    var ucitel = new Ucitel(casti[0], casti[1], casti[2], casti[3]);
-            //    _databaza.Add<Ucitel>(_databaza.GetUcitelia(), ucitel);
-            //}
-            //else if (TablesComboBox.SelectedItem.ToString() == "predmet_bod")
-            //{
-            //    var predmetBod = new Predmet_bod(casti[0], casti[1], casti[2], casti[3], casti[4], casti[5]);
-            //    _databaza.Add<Predmet_bod>(_databaza.GetPredmet_Body(), predmetBod);
-            //}
-            //else if (TablesComboBox.SelectedItem.ToString() == "st_program")
-            //{
-            //    var stProgram = new st_program(casti[0], casti[1], casti[2], casti[3], casti[4], casti[5], casti[6]);
-            //    _databaza.Add<st_program>(_databaza.GetStProgramy(), stProgram);
-            //}
-            //else if (TablesComboBox.SelectedItem.ToString() == "st_odbory")
-            //{
-            //    var stOdbor = new St_odbor(casti[0], casti[1], casti[2], casti[3]);
-            //    _databaza.Add<St_odbor>(_databaza.GetStOdbory(), stOdbor);
-            //}
         });
 
-        //ValuesTextBox.Text = "default";
-        //foreach (var item in _databaza.GetUniversal().ElementAt(0))
         var list = _databaza.GetUniversal();
         for (int i = 0; i < list.ElementAt(0).Kapacita(); i++)
-        {
             ValuesTextBox.AppendText($"{list.ElementAt(0).GetStlpec(i)}, ");
-            //CustomColls.AppendText($"{list.ElementAt(0).GetStlpec(i)}, ");
-        }
         deleteButton.IsEnabled = true;
     }
 
@@ -148,13 +85,9 @@ public partial class InsertTab : UserControl
         string? tabulka;
         string[] stlpce = new string[15];
         if (TablesComboBox.IsVisible)
-        {
             tabulka = TablesComboBox.SelectedItem.ToString();
-        }
         else if (CustomTableNAme.IsVisible)
-        {
             tabulka = CustomTableNAme.Text;
-        }
         else if (CustomComboBox.IsVisible)
         {
             tabulka = CustomComboBox.SelectedItem.ToString();
@@ -172,7 +105,6 @@ public partial class InsertTab : UserControl
             for (int i = 0; i < 16; i++)
                 stlpce[i] = "";
         }
-       
 
         var sb = new StringBuilder();
         string[] casti = ValuesTextBox.Text.Split(",");
@@ -181,9 +113,7 @@ public partial class InsertTab : UserControl
         foreach (var cast in casti)
         {
             if (cast.Contains("'"))
-            {
                 col.Add(cisloStlpcu);
-            }
             cisloStlpcu++;
         }
 
@@ -212,65 +142,11 @@ public partial class InsertTab : UserControl
                             if (list.ElementAt(0).GetStlpec(i).Contains(stlpce[j]))
                             {
                                 if (j == stlpce.Length - 1)
-                                {
                                     sb.Append($"{osoba.GetStlpec(i)}"); //QueryOutput.AppendText($"{osoba.GetStlpec(i)}");
-                                    //for (int b = 0; b < col.Count; b++)
-                                    //{
-                                    //    if (col.ElementAt(b) == j)
-                                    //        sb.Append($"'{osoba.GetStlpec(i)}'");
-                                    //}
-                                    //for (int b = 0; b < col.Count; b++)
-                                    //{
-                                    //    if (col.ElementAt(b) == j)
-                                    //    {
-                                    //        sb.Append($"'{osoba.GetStlpec(i)}'");
-                                    //        col.RemoveAt(b);
-                                    //        //nebolo = false;
-                                    //        break;
-                                    //    }
-                                    //    else
-                                    //        sb.Append($"{osoba.GetStlpec(i)}");
-                                    //}
-                                }
                                 else
-                                {
                                     sb.Append($"{osoba.GetStlpec(i)}, "); //QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");
-                                    //if (col.Count > 0)
-                                    //{
-                                        
-                                    //    //for (int b = 0; b < col.Count; b++)
-                                    //    //{
-                                    //    //    //bool nebolo = true;
-                                    //    //    if (col.ElementAt(b) == j)
-                                    //    //    {
-                                    //    //        sb.Append($"'{osoba.GetStlpec(i)}', ");
-                                    //    //        col.RemoveAt(b);
-                                    //    //        //nebolo = false;
-                                    //    //        break;
-                                    //    //    }
-                                    //    //    else
-                                    //    //        sb.Append($"{osoba.GetStlpec(i)}, ");
-                                    //    //}
-                                    //}
-                                    //else
-                                    //{
-                                    //    sb.Append($"{osoba.GetStlpec(i)}, ");
-                                    //}
-                                }
                             }
                         }
-                        //string[] strings = sb.ToString().Split(",");
-                        //for (int b = 0; b < col.Count; b++)
-                        //{
-                        //    strings[col.ElementAt(b)] = $"'{strings[col.ElementAt(b)]}'";
-                        //}
-                        //sb.Clear();
-                        //for (int b = 0; b < strings.Length; b++)
-                        //{
-                        //    sb.Append($"{strings[b]}, ");
-                        //}
-                        //QueryOutput.AppendText(sb.ToString());
-                        //sb.Clear();
                     }
                     else if (CustomColls.IsVisible)
                     {
@@ -281,11 +157,6 @@ public partial class InsertTab : UserControl
                         //QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");
                         sb.Append($"{osoba.GetStlpec(i)}, ");
                     }
-                    //if (list.ElementAt(0).GetStlpec(i).Contains(stlpce[5]))
-                    //{
-                    //    QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");
-                    //}
-                    //QueryOutput.AppendText($"{osoba.GetStlpec(i)}, ");
                 }
                 //QueryOutput.AppendText($"INSERT INTO {tabulka}\n\tVALUES {osoba.GetStlpec(0)}, {osoba._meno}, {osoba._priezvisko}, {osoba._ulica}, {osoba._psc}, {osoba._obec};\n\n");
 
@@ -302,18 +173,11 @@ public partial class InsertTab : UserControl
                 for (int b = 0; b < strings.Length; b++)
                 {
                     if (b == strings.Length - 1)
-                    {
                         sb.Append($"{strings[b]}");
-                    }
                     else
-                    {
                         sb.Append($"{strings[b]}, ");
-                    }
                     //sb.Append($"{strings[b]}, ");
                 }
-                //QueryOutput.AppendText($"{sb.ToString()});\n");
-                //QueryOutput.AppendText($"{sb.ToString()}), ");
-                //sb.Clear();
                 if (index % int.Parse(multiple.Text) == 0)
                 {
                     QueryOutput.AppendText($"{sb.ToString()});\n");
@@ -327,40 +191,10 @@ public partial class InsertTab : UserControl
                 }
                 index++;
                 cisloStlpcu = 0;
-                //foreach (var cast in casti)
-                //{
-                //    if (cast.Contains("'"))
-                //    {
-                //        col.Add(cisloStlpcu);
-                //    }
-                //    cisloStlpcu++;
-                //}
             }
-            //Napis(tabulka!);
         }
         else
-        {
             QueryOutput.AppendText($"INSERT INTO {tabulka}\n\tVALUES {ValuesTextBox.Text};");
-        }
-    }
-
-    private void Napis(string tab)
-    {
-        if (tab.Equals("os_udaje"))
-        {
-            foreach (var osoba in _databaza.GetOsoby())
-                QueryOutput.AppendText($"INSERT INTO {tab}\n\tVALUES {osoba._rod_cislo}, {osoba._meno}, {osoba._priezvisko}, {osoba._ulica}, {osoba._psc}, {osoba._obec};\n\n");
-        }
-        else if (tab.Equals("student"))
-        {
-            foreach (var student in _databaza.GetStudenti())
-                QueryOutput.AppendText($"INSERT INTO {tab}\n\tVALUES {student._os_cislo}, {student._st_odbor}, {student._st_zameranie}, {student._st_zameranie}, {student._rod_cislo}, {student._rocnik}, {student._st_skupina}, {student._stav}, {student._ukoncenie}, {student._dat_zapisu};\n\n");
-        }
-        else if (tab.Equals("ukazka"))
-        {
-            foreach (var ukazka in _databaza.GetUkazky())
-                QueryOutput.AppendText($"INSERT INTO {tab}\n\tVALUES {ukazka._skupina}, {ukazka._priezvisko}, {ukazka._meno}, {ukazka._os_cislo}, {ukazka._cip_karta}, {ukazka._bodyZaSemester}, {ukazka._datumZaverHodnotenia}, {ukazka._znamkaZaverHodnotenia}, {ukazka._datum1T}, {ukazka._znamka1T}, {ukazka._datum2T}, {ukazka._znamka2T}, {ukazka._datum3T}, {ukazka._znamka3T}, {ukazka._body}, {ukazka._opakuje};\n\n");
-        }
     }
 
     private void OnClickClear(object sender, RoutedEventArgs e) => QueryOutput.Clear();
@@ -370,114 +204,13 @@ public partial class InsertTab : UserControl
         SaveFileDialog sfd = new SaveFileDialog();
         sfd.Filter = "CSV súbory (*.csv) | *.csv";
         sfd.ShowDialog();
-        FileInfo subor = new FileInfo(sfd.FileName);
-
-        string? tabulka;
-        string[] stlpce = new string[15];
-        if (TablesComboBox.IsVisible)
+        if (!sfd.FileName.Equals(""))
         {
-            tabulka = TablesComboBox.SelectedItem.ToString();
-        }
-        else if (CustomTableNAme.IsVisible)
-        {
-            tabulka = CustomTableNAme.Text;
-        }
-        else if (CustomComboBox.IsVisible)
-        {
-            tabulka = CustomComboBox.SelectedItem.ToString();
-            stlpce = CustomColls.Text.Split(", ");
-        }
-        else if (CustomTextBox.IsVisible)
-        {
-            tabulka = CustomTextBox.Text;
-            stlpce = CustomColls.Text.Split(", ");
-        }
-        else
-        {
-            tabulka = "";
-            stlpce = new string[16];
-            for (int i = 0; i < 16; i++)
-                stlpce[i] = "";
-        }
-
-        var sb = new StringBuilder();
-        string[] casti = ValuesTextBox.Text.Split(",");
-        List<int> col = new List<int>();
-        int cisloStlpcu = 0;
-        foreach (var cast in casti)
-        {
-            if (cast.Contains("'"))
+            FileInfo file = new FileInfo(sfd.FileName);
+            _databaza.Save(file, (sw) =>
             {
-                col.Add(cisloStlpcu);
-            }
-            cisloStlpcu++;
-        }
-
-        using (var sw = new StreamWriter(subor.FullName))
-        {
-            int index = 0;
-            var list = _databaza.GetUniversal();
-            foreach (var osoba in list)
-            {
-                if (CustomColls.IsVisible)
-                    sw.Write($"INSERT INTO {tabulka} ({CustomColls.Text})\n\tVALUES (");
-                else
-                    sw.Write($"INSERT INTO {tabulka}\n\tVALUES (");
-                int max = list.ElementAt(index).Kapacita();
-                for (int i = 0; i < max; i++)
-                {
-                    if (CustomColls.IsVisible)
-                    {
-                        for (int j = 0; j < stlpce.Length; j++)
-                        {
-                            if (list.ElementAt(0).GetStlpec(i).Contains(stlpce[j]))
-                            {
-                                if (j == stlpce.Length - 1)
-                                    sb.Append($"{osoba.GetStlpec(i)}"); //sw.Write($"{osoba.GetStlpec(i)}");
-                                else
-                                    sb.Append($"{osoba.GetStlpec(i)}, "); //sw.Write($"{osoba.GetStlpec(i)}, ");
-                            }
-                        }
-                    }
-                    else if (CustomColls.IsVisible)
-                    {
-
-                    }
-                    else
-                    {
-                        sw.Write($"{osoba.GetStlpec(i)}, ");
-                    }
-                }
-
-                string[] strings = sb.ToString().Split(",");
-                for (int b = 0; b < col.Count; b++)
-                {
-                    strings[col.ElementAt(b)] = strings[col.ElementAt(b)].Trim();
-                }
-                for (int b = 0; b < col.Count; b++)
-                {
-                    strings[col.ElementAt(b)] = $"'{strings[col.ElementAt(b)]}'";
-                }
-                sb.Clear();
-                for (int b = 0; b < strings.Length; b++)
-                {
-                    sb.Append($"{strings[b]}, ");
-                }
-               
-                
-
-                sw.Write($"{sb.ToString()});\n");
-                sb.Clear();
-                index++;
-            }
-
-            //foreach (var ukazka in _databaza.GetUkazky())
-            //{
-            //    sw.WriteLine($"INSERT INTO ukazka VALUES {ukazka._skupina}, {ukazka._priezvisko}, {ukazka._meno}, {ukazka._os_cislo}, {ukazka._cip_karta}, {ukazka._bodyZaSemester}, {ukazka._datumZaverHodnotenia}, {ukazka._znamkaZaverHodnotenia}, {ukazka._datum1T}, {ukazka._znamka1T}, {ukazka._datum2T}, {ukazka._znamka2T}, {ukazka._datum3T}, {ukazka._znamka3T}, {ukazka._body}, {ukazka._opakuje};\n");
-            //}
-
-            //sw.WriteLine("fs");
-            sw.Close();
+                sw.Write(QueryOutput.Text);
+            });
         }
     }
 
@@ -523,7 +256,6 @@ public partial class InsertTab : UserControl
         {
             TablesComboBox.Visibility = Visibility.Hidden;
             CustomTableNAme.Visibility = Visibility.Visible;
-
         }
         else if (customCheck.IsChecked!.Value && customRadio.IsChecked!.Value)
         {
@@ -542,10 +274,7 @@ public partial class InsertTab : UserControl
         }
     }
 
-    private void OnTextChangedCustomColls(object sender, TextChangedEventArgs e)
-    {
-        ValuesTextBox.Text = CustomColls.Text;
-    }
+    private void OnTextChangedCustomColls(object sender, TextChangedEventArgs e) => ValuesTextBox.Text = CustomColls.Text;
 
     private void OnClickDeleteButton(object sender, RoutedEventArgs e)
     {

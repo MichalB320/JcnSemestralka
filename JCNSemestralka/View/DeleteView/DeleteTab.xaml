@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Header="Citac" Grid.Row="0">
+        <GroupBox Header="READER" Grid.Row="0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -48,7 +48,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Margin="20, 10, 10, 5">DELETE FROM</TextBlock>
-                    <ComboBox Grid.Column="1" Margin="0, 5, 20, 5"></ComboBox>
+                    <ComboBox Name="tablesComboBox" Grid.Column="1" Margin="0, 5, 20, 5"></ComboBox>
                 </Grid>
 
                 <Grid Grid.Row="1">
@@ -57,12 +57,13 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Margin="40,5, 10, 10">WHERE</TextBlock>
-                    <TextBox Grid.Column="1"  Margin="7, 5, 20, 10"></TextBox>
+                    <TextBox Name="whereTextBox" Grid.Column="1"  Margin="7, 5, 20, 10"></TextBox>
                 </Grid>
 
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Margin="10" Width="100" Height="25">CLEAR</Button>
-                    <Button Margin="10" Width="100" Height="25">GENERATE</Button>
+                    <Button Margin="10" Width="100" Height="25" Click="OnClickClear">CLEAR</Button>
+                    <Button Margin="10" Width="100" Height="25" Click="OnClickGenerate">GENERATE</Button>
+                    <Button Margin="10" Width="100" Height="25" Click="OnClickSave">SAVE</Button>
                 </StackPanel>
             </Grid>
         </GroupBox>
