@@ -3,8 +3,8 @@
 public class Databaza
 {
     private List<Item> _Items;
-    private string[] _collOsUdaje = { "rod_cislo", "meno", "priszvisko", "ulica", "psc", "obec" };
-    private string[] _collStudenti = { "os_cislo", "st_odbor", "st_zameranie", "rod_cislo", "rocnik", "st_skupina", "stav", "ukoncenie", "dat_zapisu" };
+    //private string[] _collOsUdaje = { "rod_cislo", "meno", "priszvisko", "ulica", "psc", "obec" };
+    //private string[] _collStudenti = { "os_cislo", "st_odbor", "st_zameranie", "rod_cislo", "rocnik", "st_skupina", "stav", "ukoncenie", "dat_zapisu" };
 
     private readonly string[][] stlpce = { new string[] { "rod_cislo", "meno", "priezvisko", "ulica", "psc", "obec" },
                               new string[] { "os_cislo", "st_odbor", "st_zameranie", "rod_cislo", "rocnik", "st_skupina", "stav", "ukoncenie", "dat_zapisu" },
@@ -42,9 +42,9 @@ public class Databaza
         }
     }
 
-    public void Save(FileInfo csvFile, Action<StreamWriter> action)
+    public static void Save(FileInfo csvFile, Action<StreamWriter> action)
     {
-        using (var sw = new StreamWriter(csvFile.FullName))
+        using (var sw = new StreamWriter(csvFile.FullName)) 
         {
             action(sw);
             sw.Close();

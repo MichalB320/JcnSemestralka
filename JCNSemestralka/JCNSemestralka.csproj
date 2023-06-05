@@ -8,7 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="model.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Library\Library.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="model.png" />
   </ItemGroup>
 
 </Project>

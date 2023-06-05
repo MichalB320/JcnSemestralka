@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Header="READER" Grid.Row="0">
+        <!--<GroupBox Header="READER" Grid.Row="0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -32,7 +32,7 @@
                 <TextBox Name="CitacTextBox" Grid.Row="1" Margin="20,10,20,10" Height="20"></TextBox>
 
             </Grid>
-        </GroupBox>
+        </GroupBox>-->
 
         <GroupBox Header="WRITE" Grid.Row="1">
             <Grid>
@@ -46,7 +46,7 @@
                 <Grid Grid.Row="0">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <CheckBox Name="customCheck" Margin="5" Click="OnClickCustomTable">customTable</CheckBox>
-                        <CheckBox Name="generateCheck" Margin="5">generateFromFile</CheckBox>
+                        <!--<CheckBox Name="generateCheck" Margin="5">generateFromFile</CheckBox>-->
                     </StackPanel>
                 </Grid>
 

@@ -37,7 +37,7 @@ public partial class InsertTab : UserControl
 
     private void OnClickFindButton(object sender, RoutedEventArgs e)
     {
-        OpenFileDialog ofd = new OpenFileDialog();
+        var ofd = new OpenFileDialog();
         ofd.Filter = "CSV súbory (*.csv) | *.csv";
         ofd.ShowDialog();
         CitacTextBox.Text = ofd.FileName;
@@ -51,7 +51,7 @@ public partial class InsertTab : UserControl
         }
         else
         {
-            FileInfo subor = new FileInfo(CitacTextBox.Text);
+            var subor = new FileInfo(CitacTextBox.Text);
             if (subor.Exists)
                 readButton.IsEnabled = true;
             else
@@ -63,7 +63,7 @@ public partial class InsertTab : UserControl
     {
         _databaza.GetUniversal().Clear();
 
-        FileInfo subor = new FileInfo(CitacTextBox.Text);
+        var subor = new FileInfo(CitacTextBox.Text);
 
         _databaza.Load(subor, (casti) =>
         {
@@ -76,7 +76,10 @@ public partial class InsertTab : UserControl
 
         var list = _databaza.GetUniversal();
         for (int i = 0; i < list.ElementAt(0).Kapacita(); i++)
+        {
             ValuesTextBox.AppendText($"{list.ElementAt(0).GetStlpec(i)}, ");
+            CustomColls.AppendText($"{list.ElementAt(0).GetStlpec(i)}, ");
+        }
         deleteButton.IsEnabled = true;
     }
 
@@ -112,7 +115,7 @@ public partial class InsertTab : UserControl
         int cisloStlpcu = 0;
         foreach (var cast in casti)
         {
-            if (cast.Contains("'"))
+            if (cast.Contains('\''))
                 col.Add(cisloStlpcu);
             cisloStlpcu++;
         }
@@ -176,7 +179,6 @@ public partial class InsertTab : UserControl
                         sb.Append($"{strings[b]}");
                     else
                         sb.Append($"{strings[b]}, ");
-                    //sb.Append($"{strings[b]}, ");
                 }
                 if (index % int.Parse(multiple.Text) == 0)
                 {
@@ -198,7 +200,7 @@ public partial class InsertTab : UserControl
     }
 
     private void OnClickClear(object sender, RoutedEventArgs e)
-    { 
+    {
         QueryOutput.Clear();
         CustomColls.Clear();
         CustomTextBox.Clear();
@@ -207,13 +209,13 @@ public partial class InsertTab : UserControl
 
     private void OnClickSave(object sender, RoutedEventArgs e)
     {
-        SaveFileDialog sfd = new SaveFileDialog();
+        var sfd = new SaveFileDialog();
         sfd.Filter = "CSV súbory (*.csv) | *.csv";
         sfd.ShowDialog();
         if (!sfd.FileName.Equals(""))
         {
-            FileInfo file = new FileInfo(sfd.FileName);
-            _databaza.Save(file, (sw) =>
+            var file = new FileInfo(sfd.FileName);
+            Databaza.Save(file, (sw) =>
             {
                 sw.Write(QueryOutput.Text);
             });

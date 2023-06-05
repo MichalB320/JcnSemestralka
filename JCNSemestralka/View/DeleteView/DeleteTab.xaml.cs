@@ -51,11 +51,11 @@ public partial class DeleteTab : UserControl
         SaveFileDialog sfd = new();
         sfd.Filter = "CSV súbory (*.csv) | *.csv";
         sfd.ShowDialog();
-        
+
         if (!sfd.FileName.Equals(""))
         {
-            FileInfo file = new FileInfo(sfd.FileName); 
-            _databaza.Save(file, (sw) =>
+            var file = new FileInfo(sfd.FileName);
+            Databaza.Save(file, (sw) =>
             {
                 sw.Write(QueryOutput.Text);
             });

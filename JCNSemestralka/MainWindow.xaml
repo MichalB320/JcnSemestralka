@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:JCNSemestralka"
         xmlns:userConstrols="clr-namespace:JCNSemestralka.View"
         xmlns:insertTab="clr-namespace:JCNSemestralka.View.InsertView"
-        xmlns:inputTab="clr-namespace:JCNSemestralka.View.InputView"
         xmlns:updateTab="clr-namespace:JCNSemestralka.View.UpdateView"
         xmlns:deleteTab="clr-namespace:JCNSemestralka.View.DeleteView"
         mc:Ignorable="d"
@@ -16,29 +15,14 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <!--<Grid Grid.Row="0">
             <userConstrols:MenuBar/>
-        </Grid>
+        </Grid>-->
         <TabControl Grid.Row="1" >
             <TabItem Header="Model">
-                <Image Width="auto" Source="C:\Users\micha\Desktop\model.png"/>
-            </TabItem>
-            <TabItem Header="Input">
-                <inputTab:InputView/>
-            </TabItem>
-            <TabItem Header="Output">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <GroupBox Header="SQL" Grid.Row="0">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <RadioButton x:Name="InsertRadioB">INSERT</RadioButton>
-                            <RadioButton x:Name="DeleteRadioB">DELETE</RadioButton>
-                            <RadioButton x:Name="UpdateRadioB">UPDATE</RadioButton>
-                        </StackPanel>
-                    </GroupBox>
-                </Grid>
+                <Image Source="/model.png" />
+
+                <!--<Image Width="auto" Source="C:\Users\micha\Desktop\model.png"/>-->
             </TabItem>
             <TabItem Header="INSERT">
                 <insertTab:InsertTab/>

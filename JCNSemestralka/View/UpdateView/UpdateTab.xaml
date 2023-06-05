@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Header="READER" Grid.Row="0">
+        <!--<GroupBox Header="READER" Grid.Row="0">
             <Grid Margin="-2,0,2,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -32,7 +32,7 @@
                 <TextBox Name="CitacTextBox" Grid.Row="1" Margin="20,10,20,10" Height="20"></TextBox>
 
             </Grid>
-        </GroupBox>
+        </GroupBox>-->
         <GroupBox Header="WRITE" Grid.Row="1">
             <Grid>
                 <Grid.RowDefinitions>
@@ -40,9 +40,16 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <!--<CheckBox Name="generateCheck" Margin="5">generateFromFile</CheckBox>-->
+                    </StackPanel>
+                </Grid>
+                
+                <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
@@ -50,9 +57,10 @@
 
                     <TextBlock Grid.Column="0" Margin="20, 10, 10, 5">UPDATE</TextBlock>
                     <ComboBox Name="TablesComboBox" Grid.Column="1" Margin="0, 5, 20, 5" SelectionChanged="OnSelectChanged"></ComboBox>
+                    <TextBox Name="CustomTableTextBox" Grid.Column="1" Margin="0, 5, 20, 5"></TextBox>
                 </Grid>
 
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
@@ -63,52 +71,12 @@
                         <ComboBox Name="CollComboBox" Margin="5"></ComboBox>
                         <TextBlock Margin="4,5,2,10">=</TextBlock>
                         <TextBox Name="ValuesTextBox" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
-
-                        <ComboBox Name="CollComboBox1" Margin="5"></ComboBox>
-                        <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox2" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
-
-                        <ComboBox Name="CollComboBox2" Margin="5"></ComboBox>
-                        <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox3" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
-
-                        <ComboBox Name="CollComboBox3" Margin="5"></ComboBox>
-                        <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox4" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
-
-                        <ComboBox Name="CollComboBox4" Margin="5"></ComboBox>
-                        <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox5" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
-
-                        <ComboBox Name="CollComboBox5" Margin="5"></ComboBox>
-                        <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox6" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
-
-                        <ComboBox Name="CollComboBox6" Margin="5"></ComboBox>
-                        <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox7" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
-
-                        <ComboBox Name="CollComboBox7" Margin="5"></ComboBox>
-                        <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox8" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
-
-                        <ComboBox Name="CollComboBox8" Margin="5"></ComboBox>
-                        <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox9" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
-
-                        <ComboBox Name="CollComboBox9" Margin="5"></ComboBox>
-                        <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox10" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
-
-                        <ComboBox Name="CollComboBox10" Margin="5"></ComboBox>
-                        <TextBlock Margin="4,5,2,10">=</TextBlock>
-                        <TextBox Name="ValuesTextBox11" Grid.Column="1" Margin="7, 5, 20, 5" Width="50"></TextBox>
                     </StackPanel>
                     
-                    <Button Grid.Column="2" Click="OnClicklAdd">Add</Button>
+                    <Button Grid.Column="2" Click="OnClicklAdd" Margin="5,5,20,5" Width="40">Add</Button>
                 </Grid>
 
-                <Grid Grid.Row="2">
+                <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
@@ -117,12 +85,11 @@
                     <TextBox Name="whereTextBox" Grid.Column="1" Margin="7,5,20,10"></TextBox>
                 </Grid>
 
-                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Margin="10" Width="100" Height="25" Click="OnClickClear">CLEAR</Button>
                     <Button Margin="10" Width="100" Height="25" Click="OnClickGenerate">GENERATE</Button>
                     <Button Margin="10" Width="100" Height="25" Click="OnClickSave">SAVE</Button>
                 </StackPanel>
-
             </Grid>
         </GroupBox>
         <GroupBox Header="QUERY" Grid.Row="2">

@@ -1,7 +1,7 @@
 ﻿using Library;
 using Microsoft.Win32;
-using System.ComponentModel.Design;
 using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace JCNSemestralka.View.UpdateView;
@@ -19,7 +19,6 @@ public partial class UpdateTab : UserControl
                               new string[] { "cis_predm", "skrok", "garant", "ects", "semester", "forma_kont"},
                               new string[] { "st_odbor", "st_zameranie", "cis_predm", "skrok", "typ_povin", "rocnik", "odpor_rocnik"},
                               new string[] { "st_odbor", "st_zameranie", "popis_odboru", "popis_zamerania"} };
-    //private int start;
     private Databaza _databaza;
 
     public UpdateTab()
@@ -35,52 +34,18 @@ public partial class UpdateTab : UserControl
             TablesComboBox.Items.Add(tabulka);
         }
 
+        CustomTableTextBox.Visibility = Visibility.Hidden;
 
         TablesComboBox.SelectedIndex = 0;
-        //foreach (var item in stlpce[TablesComboBox.SelectedIndex])
-        //{
-        //    CollComboBox.Items.Add(item);
-        //}
-        //start = 3;
-        //StackPanel.Children[5].Visibility = System.Windows.Visibility.Hidden;
-        //for (int i = 3; i < 33; i++) ------------------------------------------odkomentuj potom-----------
-        //
-        //{
-        //    StackPanel.Children[i].Visibility = System.Windows.Visibility.Hidden;
-        //}
     }
 
     private void OnSelectChanged(object sender, SelectionChangedEventArgs e)
     {
-        //CollComboBox.Items.Clear();
-        //foreach (var item in stlpce[TablesComboBox.SelectedIndex])
-        //{
-        //    CollComboBox.Items.Add(item);
-        //    CollComboBox1.Items.Add(item);
-        //    CollComboBox2.Items.Add(item);
-        //    CollComboBox3.Items.Add(item);
-        //    CollComboBox4.Items.Add(item);
-        //    CollComboBox5.Items.Add(item);
-        //    CollComboBox6.Items.Add(item);
-        //    CollComboBox7.Items.Add(item);
-        //    CollComboBox8.Items.Add(item);
-        //    CollComboBox9.Items.Add(item);
-        //    CollComboBox10.Items.Add(item);
-        //}
-
         StackPanel.Children.Clear();
         Add();
     }
 
-    private void OnClicklAdd(object sender, System.Windows.RoutedEventArgs e)
-    {
-        Add();
-        //for (int i = start; i < start + 3; i++)
-        //{
-        //    StackPanel.Children[i].Visibility = System.Windows.Visibility.Visible;
-        //}
-        //start = start + 3;
-    }
+    private void OnClicklAdd(object sender, System.Windows.RoutedEventArgs e) => Add();
 
     private void OnClickClear(object sender, System.Windows.RoutedEventArgs e)
     {
@@ -91,13 +56,8 @@ public partial class UpdateTab : UserControl
 
     private void OnClickGenerate(object sender, System.Windows.RoutedEventArgs e)
     {
-        //QueryOutput.AppendText($"UPDATE {TablesComboBox.SelectedItem} SET {CollComboBox.SelectedItem} = {ValuesTextBox.Text} WHERE {whereTextBox.Text};\n");
-        //foreach (var child in StackPanel.Children)
-        //{
-
         QueryOutput.AppendText($"UPDATE {TablesComboBox.SelectedItem} SET ");
 
-        //}
         for (int i = 0; i < StackPanel.Children.Count; i++)
         {
             if (i % 3 == 0)
@@ -112,26 +72,25 @@ public partial class UpdateTab : UserControl
             }
             else if (i % 3 == 2)
             {
-                TextBox? textBox = StackPanel.Children[2] as TextBox;
-                QueryOutput.AppendText($"{textBox!.Text} ");
+                TextBox? textBox = StackPanel.Children[i] as TextBox;
+                QueryOutput.AppendText($"{textBox!.Text}");
             }
+            if (i != StackPanel.Children.Count - 1 && i % 3 == 2)
+                QueryOutput.AppendText(", ");
         }
-        //ComboBox? comboBox = StackPanel.Children[0] as ComboBox;
-        //QueryOutput.AppendText(comboBox!.SelectedItem.ToString());
-
         QueryOutput.AppendText($" WHERE {whereTextBox.Text};\n");
     }
 
     private void OnClickSave(object sender, System.Windows.RoutedEventArgs e)
     {
-        SaveFileDialog sfd = new SaveFileDialog();
+        var sfd = new SaveFileDialog();
         sfd.Filter = "CSV súbory (*.csv) | *.csv";
         sfd.ShowDialog();
 
         if (!sfd.FileName.Equals(""))
         {
-            FileInfo file = new FileInfo(sfd.FileName);
-            _databaza.Save(file, sw =>
+            FileInfo file = new (sfd.FileName);
+            Databaza.Save(file, sw =>
             {
                 sw.Write(QueryOutput.Text);
             });
@@ -148,7 +107,7 @@ public partial class UpdateTab : UserControl
             comboBox.Items.Add(item);
         }
         StackPanel.Children.Add(comboBox);
-        
+
         var textBlok = new TextBlock();
         textBlok.Text = "=";
         textBlok.Margin = new System.Windows.Thickness(5);
