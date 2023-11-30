@@ -44,7 +44,7 @@ public class Databaza
 
     public static void Save(FileInfo csvFile, Action<StreamWriter> action)
     {
-        using (var sw = new StreamWriter(csvFile.FullName)) 
+        using (var sw = new StreamWriter(csvFile.FullName))
         {
             action(sw);
             sw.Close();

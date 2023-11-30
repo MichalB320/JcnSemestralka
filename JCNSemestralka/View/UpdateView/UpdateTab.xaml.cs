@@ -89,7 +89,7 @@ public partial class UpdateTab : UserControl
 
         if (!sfd.FileName.Equals(""))
         {
-            FileInfo file = new (sfd.FileName);
+            FileInfo file = new(sfd.FileName);
             Databaza.Save(file, sw =>
             {
                 sw.Write(QueryOutput.Text);

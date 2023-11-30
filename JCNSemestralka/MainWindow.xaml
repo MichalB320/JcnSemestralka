@@ -4,10 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JCNSemestralka"
+        xmlns:main="clr-namespace:JCNSemestralka"
+        xmlns:user="clr-namespace:JCNSemestralka.View.ConnectView"
         xmlns:userConstrols="clr-namespace:JCNSemestralka.View"
         xmlns:insertTab="clr-namespace:JCNSemestralka.View.InsertView"
         xmlns:updateTab="clr-namespace:JCNSemestralka.View.UpdateView"
         xmlns:deleteTab="clr-namespace:JCNSemestralka.View.DeleteView"
+        xmlns:connectTab="clr-namespace:JCNSemestralka.View.ConnectView"
+        xmlns:generalTab="clr-namespace:JCNSemestralka.View.GeneralView"
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="600">
     <Grid>
@@ -32,6 +36,12 @@
             </TabItem>
             <TabItem Header="DELETE">
                 <deleteTab:DeleteTab/>
+            </TabItem>
+            <TabItem Header="CONNECT">
+                <connectTab:ConnectTab/>
+            </TabItem>
+            <TabItem Header="GENERAL">
+                <generalTab:GeneralTab/>
             </TabItem>
         </TabControl>
     </Grid>

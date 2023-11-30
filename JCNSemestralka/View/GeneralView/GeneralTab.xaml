@@ -1,0 +1,123 @@
+﻿<UserControl x:Class="JCNSemestralka.View.GeneralView.GeneralTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JCNSemestralka.View.GeneralView"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Header="READER" Grid.Column="0">
+                <Grid VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Width="90" Height="25">FIND</Button>
+                        <Button Name="readButton" Grid.Column="1" Width="90" Height="25">READ</Button>
+                        <Button Name="deleteButton" Grid.Column="2" Width="90" Height="25">DELETE</Button>
+                    </Grid>
+
+                    <TextBox Name="CitacTextBox" Grid.Row="1" Margin="20,10,20,10" Height="20"/>
+
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Grid.Column="1" Header="CONNECT">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0">Domain:</TextBlock>
+                        <TextBox Name="pathTextBox" Grid.Row="0" Grid.Column="1">LDAP://pegasus.fri.uniza.sk</TextBox>
+                        <TextBlock Grid.Row="1" Grid.Column="0">User:</TextBlock>
+                        <TextBox Name="userTextBox"  Grid.Row="1" Grid.Column="1"></TextBox>
+                        <TextBlock Grid.Row="2" Grid.Column="0">Password:</TextBlock>
+                        <PasswordBox Name="passwordBox" Grid.Row="2" Grid.Column="1"></PasswordBox>
+                        
+                    </Grid>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Click="OnClickConnect">Conncet</Button>
+                        <Button Click="OnClickDisconnect">Disconnect</Button>
+                    </StackPanel>
+                    <TextBlock Name="infoLoggedInTextBlock" Grid.Row="2">Logged out</TextBlock>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0">Condition: </TextBlock>
+                        <TextBox Name="ConditionTextBox" Grid.Column="1"></TextBox>
+                    </Grid>
+                    <Button Name="searchButton" Grid.Row="4" Click="OnClickSearchButton">Search</Button>
+                </Grid>
+            </GroupBox>
+        </Grid>
+
+        <GroupBox Grid.Row="1" Header="WRITE">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Name="multi" Height="33" VerticalAlignment="Top" >
+                        expression:
+                    </TextBlock>
+                    <TextBox Name="expressionTextBox" Grid.Column="1" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto">
+                        useradd -c "$displayName$" -d /home/$uid$ -u $uidNumber$ -m -g $gidNumber$ -s /bin/bash $uid$
+                        chmod 701 /home/$uid$
+                    </TextBox>
+                </Grid>
+                <StackPanel Grid.Row="1">
+                    <Button Click="OnClickGenerate">
+                        GENERATE
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Header="QUERY">
+            <TextBox Name="output">
+                
+            </TextBox>
+        </GroupBox>
+    </Grid>
+</UserControl>
