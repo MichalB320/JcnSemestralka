@@ -76,7 +76,6 @@ public partial class GeneralTab : UserControl
                 }
                 output.AppendText("\n");
                 output.AppendText("\n");
-                output.AppendText("\n");
             }
         }
     }
