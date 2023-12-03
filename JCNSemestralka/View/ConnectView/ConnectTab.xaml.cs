@@ -1,7 +1,9 @@
 ﻿using System;
 using System.DirectoryServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace JCNSemestralka.View.ConnectView;
 
@@ -18,7 +20,7 @@ public partial class ConnectTab : UserControl
         _entry = null!;
     }
 
-    private void onClickConnectButton(object sender, RoutedEventArgs e)
+    private void OnClickConnectButton(object sender, RoutedEventArgs e)
     {
         string ldapPath = pathTextBox.Text;
         string username = userTextBox.Text;
@@ -35,7 +37,7 @@ public partial class ConnectTab : UserControl
             infoLoggedTextBlock.Text = $"Error: {ex.Message}";
         }
     }
-    private void onClickDisconnectButton(object sender, RoutedEventArgs e)
+    private void OnClickDisconnectButton(object sender, RoutedEventArgs e)
     {
         if (_entry != null)
         {
@@ -45,53 +47,50 @@ public partial class ConnectTab : UserControl
         }
     }
 
-    private void onClickSearchButton(object sender, RoutedEventArgs e)
+    private void OnClickSearchButton(object sender, RoutedEventArgs e)
     {
         string[] names = { "skupina", "priezvisko", "meno", "os. číslo", "čip. karta" };
         string[] propertyNames = { "physicalDeliveryOfficeName", "sn", "givenName", "uidNumber", "employeeNumber" };
         string ldapPath = pathTextBox.Text;
 
-        try
+        var vlakno = new Thread(() =>
         {
-            using (DirectorySearcher searcher = new DirectorySearcher(_entry))
+            try
             {
-                searcher.Filter = conditionTextBox.Text;
-
+                using DirectorySearcher searcher = new DirectorySearcher(_entry);
+                string filter = "";
+                conditionTextBox.Dispatcher.Invoke(() => filter = conditionTextBox.Text);
+                searcher.Filter = filter;
                 SearchResultCollection results = searcher.FindAll();
-
                 foreach (SearchResult result in results)
                 {
                     DirectoryEntry resultEntry = result.GetDirectoryEntry();
-
-                    //output.AppendText("User: " + resultEntry.Properties["samAccountName"].Value);
-                    //output.AppendText("heslo: " + resultEntry.InvokeGet());
-
-                    output.AppendText($"{result.Path}\n\t");
-                    //int i = 0;
+                    UpdateTextBox($"{result.Path}\n\t");
                     foreach (string propertyName in resultEntry.Properties.PropertyNames)
-                    {
-                        output.AppendText(propertyName + ": " + resultEntry.InvokeGet(propertyName) + "\n\t");
-                    }
+                        UpdateTextBox(propertyName + ": " + resultEntry.InvokeGet(propertyName) + "\n\t");
 
+                    //int i = 0;
                     //foreach (var propertyName in propertyNames)
                     //{
                     //    output.AppendText(names[i] + ": " + resultEntry.Properties[propertyName][0] + "\n\t");
                     //    i++;
                     //}
-
-
-                    //foreach (string objectClass in result.Properties["objectClass"])
-                    //{
-                    //    output.AppendText($"ObjectClass: {objectClass}");
-                    //}
-
                 }
             }
-        }
-        catch (Exception ex)
-        {
-            output.AppendText($"chyba: {ex.Message}\n");
-        }
+            catch (Exception ex)
+            {
+                UpdateTextBox($"Error: {ex.Message}\n");
+            }
+        });
+        vlakno.Start();
+    }
+
+    private void UpdateTextBox(string txt)
+    {
+        if (this.CheckAccess())
+            output.AppendText(txt);
+        else
+            this.Dispatcher.Invoke(DispatcherPriority.Background, new Action<string>(UpdateTextBox), txt);
     }
 }
 

@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -21,80 +24,63 @@ public partial class GeneralTab : UserControl
         _entry = null!;
         _resultEntry = null!;
         _results = null!;
+        boxRadioButton.IsChecked = true;
     }
 
-    private void OnClickGenerate(object sender, RoutedEventArgs e)
+    private async void OnClickGenerate(object sender, RoutedEventArgs e)
     {
         string inBox = expressionTextBox.Text;
-
-        int count = 0;
-
-        foreach (char c in inBox)
-        {
-            if (c.Equals('$'))
-                count++;
-        }
-
-        string[] pole = { "bezo1", "559550", "5YR32", "bezo1", "559550", "5YR32" };
-        List<string> dolariky = new List<string>();
+        int count = inBox.Count(c => c == '$');
 
         if (count % 2 == 0)
         {
-            int startI = inBox.IndexOf('$');
-            for (int i = 0; i < count / 2; i++)
+            await Task.Run(async () =>
             {
-                int startIndex = startI;
-                int endIndex = inBox.IndexOf('$', startIndex + 1);
-                startI = inBox.IndexOf('$', endIndex + 1);
-                string subStr = inBox.Substring(startIndex + 1, endIndex - 1 - startIndex);
-                //output.AppendText($"{subStr}, ");
-                //output.AppendText("\n");
-                dolariky.Add(subStr);
-            }
+                List<string> vars = new();
+                vars = await FindVariables(inBox, count);
 
-
-            foreach (SearchResult result in _results)
-            {
-                //output.AppendText($"{result.Path}\n");
-                DirectoryEntry resultEntry = result.GetDirectoryEntry();
-
-                //foreach (string property in resultEntry.Properties.PropertyNames)
-                //{
-                //    output.AppendText(property + ": " + resultEntry.InvokeGet(property) + "\n");
-                //}
-
-
-                int startIndex1 = -1;
-                for (int i = 0; i < count / 2; i++)
+                foreach (SearchResult result in _results)
                 {
-                    int startIndex = startIndex1;
-                    int endIndex = inBox.IndexOf('$', startIndex + 1);
-                    startIndex1 = inBox.IndexOf('$', endIndex + 1);
-                    string subStr = inBox.Substring(startIndex + 1, endIndex - 1 - startIndex);
-                    //output.AppendText($"{subStr}{pole[i]}");
-                    output.AppendText($"{subStr}{resultEntry.InvokeGet(dolariky[i])}");
+                    DirectoryEntry resultEntry = result.GetDirectoryEntry();
+                    
+                    int startIndex1 = -1; 
+                    for (int i = 0; i < count / 2; i++)
+                    {
+                        int startIndex = startIndex1;
+                        int endIndex = inBox.IndexOf('$', startIndex + 1);
+                        startIndex1 = inBox.IndexOf('$', endIndex + 1);
+                        string subStr = inBox.Substring(startIndex + 1, endIndex - 1 - startIndex);
+                        output.Dispatcher.Invoke(() => output.AppendText($"{subStr}{resultEntry.InvokeGet(vars[i])}"));
+                    }
+                    output.Dispatcher.Invoke(() =>
+                    {
+                        output.AppendText("\n");
+                        output.AppendText("\n");
+                    });
                 }
-                output.AppendText("\n");
-                output.AppendText("\n");
-            }
+            });
         }
     }
 
-    private void OnClickConnect(object sender, RoutedEventArgs e)
+    private async void OnClickConnect(object sender, RoutedEventArgs e)
     {
         string ldapPath = pathTextBox.Text;
         string user = userTextBox.Text;
         string password = passwordBox.Password;
-        try
+        
+        await Task.Run(() =>
         {
-            _entry = new DirectoryEntry(ldapPath, user, password);
-            object nativeObject = _entry.NativeObject;
-            infoLoggedInTextBlock.Text = "Logged in";
-        }
-        catch (Exception exception)
-        {
-            infoLoggedInTextBlock.Text = $"Error: {exception.Message}";
-        }
+            try
+            {
+                _entry = new DirectoryEntry(ldapPath, user, password);
+                object nativeObject = _entry.NativeObject;
+                infoLoggedInTextBlock.Dispatcher.Invoke(() => infoLoggedInTextBlock.Text = "Logged in");
+            }
+            catch (Exception exception)
+            {
+                infoLoggedInTextBlock.Dispatcher.Invoke(() => infoLoggedInTextBlock.Text = $"Error: {exception.Message}");
+            }
+        });
     }
 
     private void OnClickDisconnect(object sender, RoutedEventArgs e)
@@ -107,31 +93,51 @@ public partial class GeneralTab : UserControl
         }
     }
 
-    private void OnClickSearchButton(object sender, RoutedEventArgs e)
+    private async void OnClickSearchButton(object sender, RoutedEventArgs e)
     {
         try
         {
-            using (DirectorySearcher searcher = new DirectorySearcher(_entry))
+            using DirectorySearcher searcher = new(_entry);
+            searcher.Filter = ConditionTextBox.Text;
+            await Task.Run(() =>
             {
-                searcher.Filter = ConditionTextBox.Text;
                 _results = searcher.FindAll();
 
                 foreach (SearchResult result in _results)
-                {
-                    output.AppendText($"{result.Path}\n");
                     _resultEntry = result.GetDirectoryEntry();
-
-
-                    //foreach (string property in _resultEntry.Properties.PropertyNames)
-                    //{
-                    //    output.AppendText(property + ": " + _resultEntry.InvokeGet(property) + "\n");
-                    //}
-                }
-            }
+            });
         }
         catch (Exception exception)
         {
             output.Text = $"Error: {exception.Message}";
         }
+    }
+
+    private void OnClickFindButton(object sender, RoutedEventArgs e)
+    {
+        OpenFileDialog ofd = new();
+        ofd.Filter = "CSV súbory (*.csv) | *.csv";
+        ofd.ShowDialog();
+        CitacTextBox.Text = ofd.FileName;
+    }
+
+    private static async Task<List<string>> FindVariables (string input, int count)
+    {
+        return await Task.Run(() => 
+        {
+            List<string> vars = new();
+            int startI = input.IndexOf('$');
+            
+            for (int i = 0; i < count / 2; i++)
+            {
+                int startIndex = startI;
+                int endIndex = input.IndexOf('$', startIndex + 1);
+                startI = input.IndexOf('$', endIndex + 1);
+                string subStr = input.Substring(startIndex + 1, endIndex - 1 - startIndex);
+                vars.Add(subStr);
+            }
+            
+            return vars;
+        });
     }
 }

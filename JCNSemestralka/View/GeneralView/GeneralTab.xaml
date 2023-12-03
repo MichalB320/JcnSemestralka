@@ -32,7 +32,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Width="90" Height="25">FIND</Button>
+                        <Button Grid.Column="0" Width="90" Height="25" Click="OnClickFindButton">FIND</Button>
                         <Button Name="readButton" Grid.Column="1" Width="90" Height="25">READ</Button>
                         <Button Name="deleteButton" Grid.Column="2" Width="90" Height="25">DELETE</Button>
                     </Grid>
@@ -88,8 +88,9 @@
         </Grid>
 
         <GroupBox Grid.Row="1" Header="WRITE">
-            <Grid>
+            <Grid Margin="-1,0,1,0">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
@@ -106,7 +107,12 @@
                         chmod 701 /home/$uid$
                     </TextBox>
                 </Grid>
-                <StackPanel Grid.Row="1">
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <RadioButton Name="boxRadioButton" Margin="0,0,20,0">Generate from box</RadioButton>
+                    <RadioButton Name="fileRadioButton" Margin="0,0,20,0">Generate from file</RadioButton>
+                    <RadioButton Name="LDAPradioButton">Generate from LDAP</RadioButton>
+                </StackPanel>
+                <StackPanel Grid.Row="2">
                     <Button Click="OnClickGenerate">
                         GENERATE
                     </Button>

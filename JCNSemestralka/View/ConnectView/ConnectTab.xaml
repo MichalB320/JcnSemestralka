@@ -42,8 +42,8 @@
             <!--<TextBox Grid.Row="2" Grid.Column="1"></TextBox>-->
             <PasswordBox Name="passwordBox" Grid.Row="2" Grid.Column="1"></PasswordBox>
 
-            <Button Name="connectButton1" Grid.Row="3" Grid.Column="1" Click="onClickConnectButton">Connect</Button>
-            <Button Name="disconnectButton" Grid.Row="3" Grid.Column="2" Click="onClickDisconnectButton">Disconnect</Button>
+            <Button Name="connectButton1" Grid.Row="3" Grid.Column="1" Click="OnClickConnectButton">Connect</Button>
+            <Button Name="disconnectButton" Grid.Row="3" Grid.Column="2" Click="OnClickDisconnectButton">Disconnect</Button>
 
             <TextBlock Name="infoLoggedTextBlock" Grid.Row="4" Grid.Column="1">Logged out</TextBlock>
         </Grid>
@@ -62,7 +62,7 @@
             <TextBlock Grid.Row="0" Grid.Column="0">Condition: </TextBlock>
             <TextBox Name="conditionTextBox" Grid.Row="0" Grid.Column="1"></TextBox>
 
-            <Button Name="searchButoon" Grid.Row="1" Grid.Column="1" Click="onClickSearchButton">Search</Button>
+            <Button Name="searchButoon" Grid.Row="1" Grid.Column="1" Click="OnClickSearchButton">Search</Button>
         </Grid>
         
         <TextBox Grid.Row="3" Name="output">
