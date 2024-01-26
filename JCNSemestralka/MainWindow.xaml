@@ -12,6 +12,7 @@
         xmlns:deleteTab="clr-namespace:JCNSemestralka.View.DeleteView"
         xmlns:connectTab="clr-namespace:JCNSemestralka.View.ConnectView"
         xmlns:generalTab="clr-namespace:JCNSemestralka.View.GeneralView"
+        xmlns:dataTab="clr-namespace:JCNSemestralka.View"
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="600">
     <Grid>
@@ -25,7 +26,6 @@
         <TabControl Grid.Row="1" >
             <TabItem Header="Model">
                 <Image Source="/model.png" />
-
                 <!--<Image Width="auto" Source="C:\Users\micha\Desktop\model.png"/>-->
             </TabItem>
             <TabItem Header="INSERT">
@@ -42,6 +42,12 @@
             </TabItem>
             <TabItem Header="GENERAL">
                 <generalTab:GeneralTab/>
+            </TabItem>
+            <TabItem Header="Connect">
+                <dataTab:Connect/>
+            </TabItem>
+            <TabItem Header="DATA SOURCES">
+                <dataTab:dataSources/>
             </TabItem>
         </TabControl>
     </Grid>

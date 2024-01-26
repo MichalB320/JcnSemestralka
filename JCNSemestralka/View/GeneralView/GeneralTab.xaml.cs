@@ -42,8 +42,8 @@ public partial class GeneralTab : UserControl
                 foreach (SearchResult result in _results)
                 {
                     DirectoryEntry resultEntry = result.GetDirectoryEntry();
-                    
-                    int startIndex1 = -1; 
+
+                    int startIndex1 = -1;
                     for (int i = 0; i < count / 2; i++)
                     {
                         int startIndex = startIndex1;
@@ -67,7 +67,7 @@ public partial class GeneralTab : UserControl
         string ldapPath = pathTextBox.Text;
         string user = userTextBox.Text;
         string password = passwordBox.Password;
-        
+
         await Task.Run(() =>
         {
             try
@@ -91,6 +91,9 @@ public partial class GeneralTab : UserControl
             _entry.Dispose();
             infoLoggedInTextBlock.Text = "Logged out";
         }
+
+        Reader reader = new();
+
     }
 
     private async void OnClickSearchButton(object sender, RoutedEventArgs e)
@@ -118,16 +121,16 @@ public partial class GeneralTab : UserControl
         OpenFileDialog ofd = new();
         ofd.Filter = "CSV súbory (*.csv) | *.csv";
         ofd.ShowDialog();
-        CitacTextBox.Text = ofd.FileName;
+        //CitacTextBox.Text = ofd.FileName;
     }
 
-    private static async Task<List<string>> FindVariables (string input, int count)
+    private static async Task<List<string>> FindVariables(string input, int count)
     {
-        return await Task.Run(() => 
+        return await Task.Run(() =>
         {
             List<string> vars = new();
             int startI = input.IndexOf('$');
-            
+
             for (int i = 0; i < count / 2; i++)
             {
                 int startIndex = startI;
@@ -136,7 +139,7 @@ public partial class GeneralTab : UserControl
                 string subStr = input.Substring(startIndex + 1, endIndex - 1 - startIndex);
                 vars.Add(subStr);
             }
-            
+
             return vars;
         });
     }

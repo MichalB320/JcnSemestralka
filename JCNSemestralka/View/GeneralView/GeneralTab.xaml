@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:JCNSemestralka.View.GeneralView"
+             xmlns:reader="clr-namespace:JCNSemestralka.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="White">
@@ -19,7 +20,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <GroupBox Header="READER" Grid.Column="0">
+            <!--<StackPanel Grid.Column="0">
+                <reader:Reader/>
+            </StackPanel>-->
+            <reader:Reader Grid.Column="0" />
+            <!--<GroupBox Header="READER" Grid.Column="0">
                 <Grid VerticalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -36,11 +41,11 @@
                         <Button Name="readButton" Grid.Column="1" Width="90" Height="25">READ</Button>
                         <Button Name="deleteButton" Grid.Column="2" Width="90" Height="25">DELETE</Button>
                     </Grid>
-
+ 
                     <TextBox Name="CitacTextBox" Grid.Row="1" Margin="20,10,20,10" Height="20"/>
 
                 </Grid>
-            </GroupBox>
+            </GroupBox>-->
 
             <GroupBox Grid.Column="1" Header="CONNECT">
                 <Grid>
@@ -122,6 +127,7 @@
 
         <GroupBox Grid.Row="2" Header="QUERY">
             <TextBox Name="output">
+                
                 
             </TextBox>
         </GroupBox>

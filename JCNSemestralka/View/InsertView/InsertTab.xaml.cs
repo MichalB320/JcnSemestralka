@@ -16,10 +16,13 @@ public partial class InsertTab : UserControl
 {
     private readonly string[] tabulky = { "os_udaje", "student", "zap_predmety", "predmet", "ucitel", "predmet_bod", "st_program", "st_odbory" };
     private Databaza _databaza;
+    public StringBuilder _StringBuilder { get; set; }
 
     public InsertTab()
     {
         InitializeComponent();
+        _StringBuilder = new StringBuilder();
+
         foreach (var collumn in tabulky)
         {
             TablesComboBox.Items.Add(collumn);
@@ -81,6 +84,7 @@ public partial class InsertTab : UserControl
             CustomColls.AppendText($"{list.ElementAt(0).GetStlpec(i)}, ");
         }
         deleteButton.IsEnabled = true;
+
     }
 
     private void OnClickGenerate(object sender, RoutedEventArgs e)
